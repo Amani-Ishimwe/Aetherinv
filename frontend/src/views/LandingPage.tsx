@@ -1,305 +1,543 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
+import {
+  Package,
+  Zap,
+  BarChart3,
+  Lock,
+  Users,
+  AlertCircle,
+  CheckCircle,
+  ArrowRight,
+  Menu,
+  X,
+} from 'lucide-react';
 
 interface LandingPageProps {
-  onLogin: () => void;
-  onRegister: () => void;
+  onLogin?: () => void;
+  onRegister?: () => void;
 }
 
-const features = [
-  {
-    icon: 'fa-solid fa-boxes-stacked',
-    title: 'Track All Your Products',
-    desc: 'See every item you sell or store — with photos, prices, and current stock levels — all in one easy place.',
-    color: 'from-blue-500/20 to-blue-600/10',
-    border: 'border-blue-500/30',
-    iconBg: 'bg-blue-500/15 text-blue-400',
-  },
-  {
-    icon: 'fa-solid fa-chart-line',
-    title: 'Understand Your Sales',
-    desc: 'Watch your daily and monthly revenue, see which products sell the most, and never miss a trend.',
-    color: 'from-brandorange-500/20 to-brandorange-600/10',
-    border: 'border-brandorange-500/30',
-    iconBg: 'bg-brandorange-500/15 text-brandorange-400',
-  },
-  {
-    icon: 'fa-solid fa-truck-fast',
-    title: 'Manage Suppliers & Orders',
-    desc: 'Send orders to your suppliers, track deliveries, and keep a full record of everything you purchase.',
-    color: 'from-purple-500/20 to-purple-600/10',
-    border: 'border-purple-500/30',
-    iconBg: 'bg-purple-500/15 text-purple-400',
-  },
-  {
-    icon: 'fa-solid fa-users',
-    title: 'Know Your Customers',
-    desc: 'Store customer details, track loyalty points, and see who owes outstanding balances at a glance.',
-    color: 'from-green-500/20 to-green-600/10',
-    border: 'border-green-500/30',
-    iconBg: 'bg-green-500/15 text-green-400',
-  },
-  {
-    icon: 'fa-solid fa-warehouse',
-    title: 'Multiple Storage Locations',
-    desc: 'Manage stock across different warehouses or shops, and move items between locations with ease.',
-    color: 'from-cyan-500/20 to-cyan-600/10',
-    border: 'border-cyan-500/30',
-    iconBg: 'bg-cyan-500/15 text-cyan-400',
-  },
-  {
-    icon: 'fa-solid fa-shield-halved',
-    title: 'Control Who Sees What',
-    desc: 'Assign different access levels to your team — cashiers, managers, and accountants each see only what they need.',
-    color: 'from-rose-500/20 to-rose-600/10',
-    border: 'border-rose-500/30',
-    iconBg: 'bg-rose-500/15 text-rose-400',
-  },
-  {
-    icon: 'fa-solid fa-clipboard-list',
-    title: 'Stock-Take & Counting',
-    desc: 'Run stock checks to compare what you have versus what the system shows, and fix any differences instantly.',
-    color: 'from-amber-500/20 to-amber-600/10',
-    border: 'border-amber-500/30',
-    iconBg: 'bg-amber-500/15 text-amber-400',
-  },
-  {
-    icon: 'fa-solid fa-file-invoice',
-    title: 'Professional Reports',
-    desc: 'Get clear, beautiful reports on revenue, profit margins, best-sellers, and low-stock alerts — ready to share.',
-    color: 'from-indigo-500/20 to-indigo-600/10',
-    border: 'border-indigo-500/30',
-    iconBg: 'bg-indigo-500/15 text-indigo-400',
-  },
-];
+const LandingPage: React.FC<LandingPageProps> = ({ onLogin, onRegister }) => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-const stats = [
-  { value: '360°', label: 'Complete Business View', icon: 'fa-solid fa-eye' },
-  { value: 'Real‑Time', label: 'Live Stock Updates', icon: 'fa-solid fa-bolt' },
-  { value: 'Multi‑Site', label: 'Warehouse Support', icon: 'fa-solid fa-location-dot' },
-  { value: 'Secure', label: 'Role‑Based Access', icon: 'fa-solid fa-lock' },
-];
+  const features = [
+    {
+      icon: Package,
+      title: 'Unified Inventory Tracking',
+      description: 'Manage products, variants, barcodes, and QR codes from a single dashboard with real-time stock visibility.',
+    },
+    {
+      icon: Zap,
+      title: 'Automated Operations',
+      description: 'Automate stock tracking, warehouse transfers, purchase orders, and inventory audits with minimal manual effort.',
+    },
+    {
+      icon: BarChart3,
+      title: 'Powerful Analytics',
+      description: 'Generate comprehensive reports on inventory value, sales performance, and business profitability.',
+    },
+    {
+      icon: Users,
+      title: 'Role-Based Access',
+      description: 'Secure role-based permissions ensure team members only access functions relevant to their responsibilities.',
+    },
+    {
+      icon: AlertCircle,
+      title: 'Smart Notifications',
+      description: 'Get automated alerts for low stock, new orders, deliveries, and discrepancies via email, SMS, and in-app.',
+    },
+    {
+      icon: Lock,
+      title: 'Enterprise Security',
+      description: 'Bank-grade encryption and compliance controls protect your sensitive inventory and financial data.',
+    },
+  ];
 
-const modules = [
-  { icon: 'fa-solid fa-gauge-high', name: 'Overview Dashboard', desc: 'Your business at a glance — revenue, stock levels, low-stock alerts, and top sellers.' },
-  { icon: 'fa-solid fa-tag', name: 'Product Catalogue', desc: 'Add, edit, and organise every product with photos, barcodes, categories, and variants.' },
-  { icon: 'fa-solid fa-arrow-right-arrow-left', name: 'Stock Movements', desc: 'Record items coming in, going out, returned, or damaged — always know what you have.' },
-  { icon: 'fa-solid fa-receipt', name: 'Sales & Invoicing', desc: 'Create sales records, apply discounts, and track what has been paid or still outstanding.' },
-  { icon: 'fa-solid fa-cart-flatbed', name: 'Purchase Orders', desc: 'Order from suppliers, track delivery status, and manage your purchase history.' },
-  { icon: 'fa-solid fa-laptop', name: 'Equipment Register', desc: 'Keep a list of office devices and tools, who has them, and their current value.' },
-];
+  const benefits = [
+    {
+      title: 'Reduce Stock Shortages',
+      description: 'Real-time visibility eliminates surprises and keeps your operations running smoothly.',
+    },
+    {
+      title: 'Cut Operational Costs',
+      description: 'Automate repetitive tasks and optimize warehouse workflows without expanding your team.',
+    },
+    {
+      title: 'Increase Accuracy',
+      description: 'Minimize human error with automated tracking, audits, and discrepancy detection.',
+    },
+    {
+      title: 'Improve Decision Making',
+      description: 'Use data-driven insights to make smarter business decisions across purchasing, sales, and inventory.',
+    },
+    {
+      title: 'Streamline Supplier Management',
+      description: 'Manage purchase orders, deliveries, and payments from a centralized hub.',
+    },
+    {
+      title: '24/7 Multi-Warehouse Control',
+      description: 'Track inventory across multiple locations, branches, and warehouses in real-time.',
+    },
+  ];
 
-export const LandingPage: React.FC<LandingPageProps> = ({ onLogin, onRegister }) => {
-  const [scrolled, setScrolled] = useState(false);
+  const testimonials = [
+    {
+      name: 'Sarah Mitchell',
+      role: 'Operations Manager at TechSupply Co.',
+      text: 'Aetherinv cut our inventory discrepancies by 85% in the first month. The automated notifications alone saved us thousands.',
+      initials: 'SM',
+    },
+    {
+      name: 'James Chen',
+      role: 'Founder at Fashion Plus Retail',
+      text: 'We went from spreadsheets to a professional inventory system. Best decision we made for scaling our business.',
+      initials: 'JC',
+    },
+    {
+      name: 'Maria Gonzalez',
+      role: 'Supply Chain Director at Global Logistics',
+      text: 'The multi-warehouse capability and real-time tracking have transformed how we operate across our 15 locations.',
+      initials: 'MG',
+    },
+  ];
 
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40);
-    window.addEventListener('scroll', onScroll);
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
+  const plans = [
+    {
+      name: 'Starter',
+      price: '$299',
+      period: '/month',
+      description: 'Perfect for small businesses managing single or dual warehouses',
+      features: [
+        'Up to 5,000 products',
+        '1 warehouse location',
+        'Basic inventory tracking',
+        'Standard reports',
+        'Email support',
+        '3 team members',
+      ],
+      highlighted: false,
+    },
+    {
+      name: 'Professional',
+      price: '$799',
+      period: '/month',
+      description: 'Ideal for growing businesses with multiple locations',
+      features: [
+        'Unlimited products',
+        'Up to 5 warehouse locations',
+        'Advanced automation',
+        'Custom reports & analytics',
+        'Email & chat support',
+        'Unlimited team members',
+        'Role-based permissions',
+        'API access',
+      ],
+      highlighted: true,
+    },
+    {
+      name: 'Enterprise',
+      price: 'Custom',
+      period: 'pricing',
+      description: 'For large organizations with complex requirements',
+      features: [
+        'Unlimited everything',
+        'Unlimited warehouse locations',
+        'White-label options',
+        'Advanced integrations',
+        '24/7 dedicated support',
+        'Custom workflows',
+        'Advanced security features',
+        'SLA guarantee',
+      ],
+      highlighted: false,
+    },
+  ];
 
   return (
-    <div className="min-h-screen bg-darkblue-950 text-slate-100 overflow-x-hidden" style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }}>
-
-      {/* ── Sticky Nav ───────────────────────────────────────────────── */}
-      <header className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 ${scrolled ? 'bg-darkblue-950/95 backdrop-blur-md shadow-lg shadow-black/40 border-b border-darkblue-850' : ''}`}>
-        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-          {/* Logo */}
-          <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-brandorange-500 to-brandorange-700 flex items-center justify-center shadow-lg shadow-brandorange-500/30">
-              <i className="fa-solid fa-boxes-stacked text-white text-base"></i>
-            </div>
-            <span className="text-xl font-black tracking-widest text-white">
-              AETHER<span className="text-brandorange-500">INV</span>
-            </span>
-          </div>
-
-          {/* CTA Buttons */}
-          <div className="flex items-center gap-3">
-            <button
-              onClick={onLogin}
-              className="px-5 py-2 text-sm font-bold text-slate-300 hover:text-white border border-darkblue-800 hover:border-brandorange-500/50 rounded-xl transition-all duration-200"
-            >
-              Sign In
-            </button>
-            <button
-              onClick={onRegister}
-              className="px-5 py-2 text-sm font-bold text-white bg-gradient-to-r from-brandorange-600 to-brandorange-500 hover:from-brandorange-500 hover:to-brandorange-400 rounded-xl shadow-lg shadow-brandorange-500/25 transition-all duration-200 active:scale-95"
-            >
-              Get Started Free
-            </button>
-          </div>
-        </div>
-      </header>
-
-      {/* ── Hero ─────────────────────────────────────────────────────── */}
-      <section className="relative min-h-screen flex flex-col items-center justify-center text-center px-6 pt-24 pb-16 overflow-hidden">
-        {/* Background glows */}
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-brandorange-500/8 rounded-full blur-[120px]" />
-          <div className="absolute bottom-0 left-1/4 w-[500px] h-[400px] bg-blue-600/8 rounded-full blur-[100px]" />
-          {/* Grid overlay */}
-          <div className="absolute inset-0 opacity-[0.03]" style={{
-            backgroundImage: 'linear-gradient(#f97316 1px, transparent 1px), linear-gradient(90deg, #f97316 1px, transparent 1px)',
-            backgroundSize: '60px 60px'
-          }} />
-        </div>
-
-        {/* Badge */}
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-brandorange-500/30 bg-brandorange-500/10 text-brandorange-400 text-xs font-bold tracking-widest uppercase mb-8 animate-pulse">
-          <i className="fa-solid fa-circle-check text-xs"></i>
-          Designed for African Businesses
-        </div>
-
-        {/* Headline */}
-        <h1 className="text-5xl sm:text-6xl lg:text-7xl font-black text-white leading-tight max-w-4xl mx-auto mb-6">
-          Run Your Business
-          <span className="block bg-gradient-to-r from-brandorange-400 via-brandorange-500 to-amber-400 bg-clip-text text-transparent">
-            With Full Confidence
-          </span>
-        </h1>
-
-        <p className="text-lg sm:text-xl text-slate-400 max-w-2xl mx-auto mb-10 leading-relaxed">
-          AetherInv gives every business owner — big or small — a complete picture of their stock, sales, and suppliers. No technical knowledge needed.
-        </p>
-
-        {/* CTA Buttons */}
-        <div className="flex flex-col sm:flex-row items-center gap-4 mb-16">
-          <button
-            onClick={onRegister}
-            className="group flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-brandorange-600 to-brandorange-500 hover:from-brandorange-500 hover:to-brandorange-400 text-white font-bold text-base rounded-2xl shadow-xl shadow-brandorange-500/30 transition-all duration-300 active:scale-95"
-          >
-            <i className="fa-solid fa-rocket group-hover:translate-x-0.5 transition-transform"></i>
-            Start Managing Your Stock
-          </button>
-          <button
-            onClick={onLogin}
-            className="flex items-center gap-3 px-8 py-4 bg-darkblue-900/60 border border-darkblue-800 hover:border-brandorange-500/40 text-slate-300 hover:text-white font-bold text-base rounded-2xl transition-all duration-300"
-          >
-            <i className="fa-solid fa-arrow-right-to-bracket"></i>
-            Sign In to My Account
-          </button>
-        </div>
-
-        {/* Stats Row */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-3xl w-full mx-auto">
-          {stats.map((s, i) => (
-            <div key={i} className="bg-darkblue-900/60 border border-darkblue-800/80 rounded-2xl p-4 flex flex-col items-center gap-2 backdrop-blur">
-              <i className={`${s.icon} text-brandorange-500 text-xl`}></i>
-              <span className="text-2xl font-black text-white">{s.value}</span>
-              <span className="text-[11px] text-slate-500 text-center font-semibold uppercase tracking-wider">{s.label}</span>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* ── Features Grid ────────────────────────────────────────────── */}
-      <section className="py-24 px-6">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <span className="text-brandorange-500 text-xs font-bold uppercase tracking-widest">Everything You Need</span>
-            <h2 className="text-4xl sm:text-5xl font-black text-white mt-3 mb-4">
-              Built for the way you work
-            </h2>
-            <p className="text-slate-400 max-w-xl mx-auto text-lg">
-              Every tool has been designed to be simple, fast, and useful — even if you have never used business software before.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-            {features.map((f, i) => (
-              <div
-                key={i}
-                className={`group relative bg-gradient-to-br ${f.color} border ${f.border} rounded-2xl p-6 hover:scale-[1.02] transition-all duration-300 cursor-default`}
-              >
-                <div className={`w-12 h-12 rounded-xl ${f.iconBg} flex items-center justify-center mb-5`}>
-                  <i className={`${f.icon} text-xl`}></i>
-                </div>
-                <h3 className="text-white font-bold text-base mb-2 leading-snug">{f.title}</h3>
-                <p className="text-slate-400 text-sm leading-relaxed">{f.desc}</p>
+    <div className="min-h-screen bg-white">
+      {/* Navigation */}
+      <nav className="fixed top-0 w-full bg-white/95 backdrop-blur-sm z-50 border-b border-gray-100">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center h-16">
+            <div className="flex items-center gap-2">
+              <div className="w-8 h-8 bg-gradient-to-br from-blue-900 to-orange-500 rounded-lg flex items-center justify-center">
+                <Package className="w-5 h-5 text-white" />
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── Modules Showcase ─────────────────────────────────────────── */}
-      <section className="py-24 px-6 bg-darkblue-900/30">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <span className="text-brandorange-500 text-xs font-bold uppercase tracking-widest">What's Inside</span>
-            <h2 className="text-4xl sm:text-5xl font-black text-white mt-3 mb-4">
-              Every section, explained simply
-            </h2>
-            <p className="text-slate-400 max-w-xl mx-auto text-lg">
-              Your team gets clear, plain-English screens — no confusing jargon, just what they need to do their job.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {modules.map((m, i) => (
-              <div key={i} className="group flex gap-5 bg-darkblue-900/60 border border-darkblue-800/80 rounded-2xl p-6 hover:border-brandorange-500/30 transition-all duration-300">
-                <div className="w-12 h-12 rounded-xl bg-brandorange-500/10 border border-brandorange-500/20 flex items-center justify-center text-brandorange-500 shrink-0 group-hover:scale-110 transition-transform duration-300">
-                  <i className={`${m.icon} text-lg`}></i>
-                </div>
-                <div>
-                  <h3 className="text-white font-bold text-base mb-1">{m.name}</h3>
-                  <p className="text-slate-400 text-sm leading-relaxed">{m.desc}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── CTA Banner ───────────────────────────────────────────────── */}
-      <section className="py-24 px-6">
-        <div className="max-w-4xl mx-auto relative">
-          {/* glow */}
-          <div className="absolute inset-0 bg-gradient-to-br from-brandorange-600/20 to-blue-600/10 rounded-3xl blur-2xl" />
-          <div className="relative bg-darkblue-900/80 border border-brandorange-500/20 rounded-3xl p-12 text-center backdrop-blur">
-            <div className="w-16 h-16 bg-gradient-to-br from-brandorange-500 to-brandorange-700 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-xl shadow-brandorange-500/30">
-              <i className="fa-solid fa-boxes-stacked text-white text-2xl"></i>
+              <span className="font-bold text-xl text-blue-900">Aetherinv</span>
             </div>
-            <h2 className="text-4xl sm:text-5xl font-black text-white mb-4">
-              Ready to take control?
-            </h2>
-            <p className="text-slate-400 text-lg mb-8 max-w-xl mx-auto">
-              Join thousands of business owners who have replaced messy spreadsheets with AetherInv — the smarter, faster way to manage stock.
-            </p>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <button
-                onClick={onRegister}
-                className="group flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-brandorange-600 to-brandorange-500 hover:from-brandorange-500 hover:to-brandorange-400 text-white font-bold text-base rounded-2xl shadow-xl shadow-brandorange-500/30 transition-all duration-300 active:scale-95"
-              >
-                <i className="fa-solid fa-user-plus"></i>
-                Create Your Free Account
-              </button>
-              <button
+
+            {/* Desktop Menu */}
+            <div className="hidden md:flex items-center gap-8">
+              <a href="#features" className="text-gray-700 hover:text-blue-900 transition">
+                Features
+              </a>
+              <a href="#benefits" className="text-gray-700 hover:text-blue-900 transition">
+                Benefits
+              </a>
+              <a href="#pricing" className="text-gray-700 hover:text-blue-900 transition">
+                Pricing
+              </a>
+            </div>
+
+            {/* CTA Buttons */}
+            <div className="hidden md:flex items-center gap-4">
+              <button 
                 onClick={onLogin}
-                className="flex items-center gap-3 px-8 py-4 border border-darkblue-700 hover:border-brandorange-500/40 text-slate-300 hover:text-white font-bold text-base rounded-2xl transition-all duration-300"
+                className="px-6 py-2 text-blue-900 font-medium hover:bg-blue-50 rounded-lg transition"
               >
-                <i className="fa-solid fa-arrow-right-to-bracket"></i>
                 Sign In
               </button>
+              <button 
+                onClick={onRegister}
+                className="px-6 py-2 bg-gradient-to-r from-blue-900 to-orange-500 text-white font-medium rounded-lg hover:shadow-lg transition"
+              >
+                Start Free Trial
+              </button>
+            </div>
+
+            {/* Mobile Menu Button */}
+            <button
+              className="md:hidden"
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+            >
+              {isMenuOpen ? <X /> : <Menu />}
+            </button>
+          </div>
+
+          {/* Mobile Menu */}
+          {isMenuOpen && (
+            <div className="md:hidden pb-4 border-t border-gray-100">
+              <a href="#features" className="block py-2 text-gray-700 hover:text-blue-900">
+                Features
+              </a>
+              <a href="#benefits" className="block py-2 text-gray-700 hover:text-blue-900">
+                Benefits
+              </a>
+              <a href="#pricing" className="block py-2 text-gray-700 hover:text-blue-900">
+                Pricing
+              </a>
+              <button 
+                onClick={onRegister}
+                className="w-full mt-4 px-4 py-2 bg-gradient-to-r from-blue-900 to-orange-500 text-white font-medium rounded-lg"
+              >
+                Start Free Trial
+              </button>
+            </div>
+          )}
+        </div>
+      </nav>
+
+      {/* Hero Section */}
+      <section className="pt-32 pb-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-blue-50 to-white">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            <div>
+              <div className="inline-block mb-4 px-4 py-2 bg-orange-100 text-orange-700 rounded-full text-sm font-medium">
+                ✨ The Complete Inventory Solution
+              </div>
+              <h1 className="text-5xl sm:text-6xl font-bold text-blue-900 mb-6 leading-tight">
+                Master Your Inventory with Precision
+              </h1>
+              <p className="text-xl text-gray-600 mb-8">
+                Centralize your supply chain, automate operations, and unlock real-time visibility across all warehouses, suppliers, and sales channels.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4">
+                <button 
+                  onClick={onRegister}
+                  className="px-8 py-4 bg-gradient-to-r from-blue-900 to-orange-500 text-white font-bold rounded-lg hover:shadow-xl transition flex items-center justify-center gap-2 group"
+                >
+                  Get Started Free
+                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition" />
+                </button>
+                <button className="px-8 py-4 border-2 border-blue-900 text-blue-900 font-bold rounded-lg hover:bg-blue-50 transition">
+                  Watch Demo
+                </button>
+              </div>
+              <p className="text-sm text-gray-500 mt-4">No credit card required • 14-day free trial • Cancel anytime</p>
+            </div>
+            <div className="hidden md:flex items-center justify-center">
+              <div className="relative w-full aspect-square max-w-md">
+                <div className="absolute inset-0 bg-gradient-to-br from-blue-900/20 to-orange-500/20 rounded-3xl blur-3xl"></div>
+                <div className="relative bg-gradient-to-br from-blue-900 to-orange-500 rounded-3xl p-1 h-full">
+                  <div className="bg-white rounded-3xl h-full flex items-center justify-center">
+                    <div className="text-center">
+                      <Package className="w-16 h-16 text-blue-900 mx-auto mb-4" />
+                      <p className="text-gray-600 font-medium">Dashboard Preview</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* ── Footer ───────────────────────────────────────────────────── */}
-      <footer className="border-t border-darkblue-850 py-8 px-6 text-center">
-        <div className="flex items-center justify-center gap-2 mb-3">
-          <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-brandorange-500 to-brandorange-700 flex items-center justify-center">
-            <i className="fa-solid fa-boxes-stacked text-white text-xs"></i>
+      {/* Features Section */}
+      <section id="features" className="py-20 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl sm:text-5xl font-bold text-blue-900 mb-4">
+              Everything You Need to Control Your Inventory
+            </h2>
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+              Powerful features built for modern inventory management
+            </p>
           </div>
-          <span className="font-black tracking-widest text-white text-sm">
-            AETHER<span className="text-brandorange-500">INV</span>
-          </span>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {features.map((feature, index) => {
+              const Icon = feature.icon;
+              return (
+                <div
+                  key={index}
+                  className="p-8 bg-white border border-gray-200 rounded-xl hover:border-orange-500 hover:shadow-lg transition"
+                >
+                  <div className="w-12 h-12 bg-gradient-to-br from-blue-900 to-orange-500 rounded-lg flex items-center justify-center mb-4">
+                    <Icon className="w-6 h-6 text-white" />
+                  </div>
+                  <h3 className="text-lg font-bold text-blue-900 mb-2">{feature.title}</h3>
+                  <p className="text-gray-600">{feature.description}</p>
+                </div>
+              );
+            })}
+          </div>
         </div>
-        <p className="text-slate-600 text-xs">
-          © 2026 AetherInv. Inventory & Business Management System.
-        </p>
+      </section>
+
+      {/* How It Works */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-blue-900 text-white">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl sm:text-5xl font-bold mb-4">
+              Seamless Integration in 3 Steps
+            </h2>
+            <p className="text-xl text-blue-100">
+              Get up and running in minutes, not months
+            </p>
+          </div>
+          <div className="grid md:grid-cols-3 gap-8">
+            {[
+              {
+                step: '01',
+                title: 'Connect Your Data',
+                description: 'Import your products, inventory, and supplier information. We handle the heavy lifting.',
+              },
+              {
+                step: '02',
+                title: 'Set Permissions',
+                description: 'Define roles for your team members. Everyone gets access to what they need.',
+              },
+              {
+                step: '03',
+                title: 'Start Automating',
+                description: 'Enable automated notifications, reports, and workflows. Watch efficiency soar.',
+              },
+            ].map((item, index) => (
+              <div key={index} className="text-center">
+                <div className="text-5xl font-bold text-orange-500 mb-4">{item.step}</div>
+                <h3 className="text-xl font-bold mb-2">{item.title}</h3>
+                <p className="text-blue-100">{item.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Benefits Section */}
+      <section id="benefits" className="py-20 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl sm:text-5xl font-bold text-blue-900 mb-4">
+              Real Results for Real Businesses
+            </h2>
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+              See the measurable impact Aetherinv delivers
+            </p>
+          </div>
+          <div className="grid md:grid-cols-2 gap-8">
+            {benefits.map((benefit, index) => (
+              <div key={index} className="flex gap-4">
+                <div className="flex-shrink-0">
+                  <div className="w-12 h-12 bg-orange-100 text-orange-600 rounded-full flex items-center justify-center">
+                    <CheckCircle className="w-6 h-6" />
+                  </div>
+                </div>
+                <div>
+                  <h3 className="text-lg font-bold text-blue-900 mb-2">{benefit.title}</h3>
+                  <p className="text-gray-600">{benefit.description}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gray-50">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl sm:text-5xl font-bold text-blue-900 mb-4">
+              Trusted by Growing Businesses
+            </h2>
+            <p className="text-xl text-gray-600">
+              See what our customers achieve with Aetherinv
+            </p>
+          </div>
+          <div className="grid md:grid-cols-3 gap-8">
+            {testimonials.map((testimonial, index) => (
+              <div
+                key={index}
+                className="bg-white p-8 rounded-xl border border-gray-200 hover:shadow-lg transition"
+              >
+                <div className="flex items-center gap-4 mb-4">
+                  <div className="w-12 h-12 bg-gradient-to-br from-blue-900 to-orange-500 rounded-full flex items-center justify-center text-white font-bold text-sm">
+                    {testimonial.initials}
+                  </div>
+                  <div>
+                    <p className="font-bold text-blue-900">{testimonial.name}</p>
+                    <p className="text-sm text-gray-600">{testimonial.role}</p>
+                  </div>
+                </div>
+                <p className="text-gray-700 italic">"{testimonial.text}"</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Pricing Section */}
+      <section id="pricing" className="py-20 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl sm:text-5xl font-bold text-blue-900 mb-4">
+              Simple, Transparent Pricing
+            </h2>
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+              Choose the plan that fits your business. All plans include a 14-day free trial.
+            </p>
+          </div>
+          <div className="grid md:grid-cols-3 gap-8">
+            {plans.map((plan, index) => (
+              <div
+                key={index}
+                className={`rounded-xl overflow-hidden transition ${
+                  plan.highlighted
+                    ? 'ring-2 ring-orange-500 shadow-xl transform md:scale-105'
+                    : 'border border-gray-200'
+                } ${plan.highlighted ? 'bg-blue-900' : 'bg-white'}`}
+              >
+                {plan.highlighted && (
+                  <div className="bg-orange-500 text-white text-center py-2 font-bold">
+                    MOST POPULAR
+                  </div>
+                )}
+                <div className={`p-8 ${plan.highlighted ? 'text-white' : ''}`}>
+                  <h3 className={`text-2xl font-bold mb-2 ${plan.highlighted ? 'text-orange-300' : 'text-blue-900'}`}>
+                    {plan.name}
+                  </h3>
+                  <p className={plan.highlighted ? 'text-blue-100' : 'text-gray-600'}>
+                    {plan.description}
+                  </p>
+                  <div className="mt-6 mb-8">
+                    <span className={`text-4xl font-bold ${plan.highlighted ? 'text-white' : 'text-blue-900'}`}>
+                      {plan.price}
+                    </span>
+                    <span className={plan.highlighted ? 'text-blue-200' : 'text-gray-600'}>
+                      {' '}{plan.period}
+                    </span>
+                  </div>
+                  <button
+                    onClick={onRegister}
+                    className={`w-full py-3 font-bold rounded-lg transition mb-8 ${
+                      plan.highlighted
+                        ? 'bg-orange-500 text-white hover:bg-orange-600'
+                        : 'bg-blue-900 text-white hover:bg-blue-800'
+                    }`}
+                  >
+                    Get Started
+                  </button>
+                  <ul className="space-y-4">
+                    {plan.features.map((feature, idx) => (
+                      <li key={idx} className="flex items-center gap-3">
+                        <CheckCircle className={`w-5 h-5 flex-shrink-0 ${plan.highlighted ? 'text-orange-300' : 'text-orange-500'}`} />
+                        <span className={plan.highlighted ? 'text-blue-100' : 'text-gray-700'}>
+                          {feature}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-r from-blue-900 to-orange-500">
+        <div className="max-w-4xl mx-auto text-center text-white">
+          <h2 className="text-4xl sm:text-5xl font-bold mb-6">
+            Ready to Transform Your Inventory Management?
+          </h2>
+          <p className="text-xl mb-8 text-blue-100">
+            Join hundreds of businesses that have already streamlined their operations with Aetherinv.
+          </p>
+          <button 
+            onClick={onRegister}
+            className="px-8 py-4 bg-white text-blue-900 font-bold rounded-lg hover:shadow-xl transition flex items-center justify-center gap-2 group mx-auto"
+          >
+            Start Your Free Trial Today
+            <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition" />
+          </button>
+          <p className="text-sm text-blue-200 mt-4">No credit card required • 14-day free trial</p>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="bg-blue-900 text-white px-4 sm:px-6 lg:px-8 py-12">
+        <div className="max-w-7xl mx-auto grid md:grid-cols-4 gap-8 mb-8">
+          <div>
+            <div className="flex items-center gap-2 mb-4">
+              <div className="w-8 h-8 bg-orange-500 rounded-lg flex items-center justify-center">
+                <Package className="w-5 h-5" />
+              </div>
+              <span className="font-bold text-lg">Aetherinv</span>
+            </div>
+            <p className="text-blue-200 text-sm">The complete inventory management solution for modern businesses.</p>
+          </div>
+          <div>
+            <h4 className="font-bold mb-4">Product</h4>
+            <ul className="space-y-2 text-sm text-blue-200">
+              <li><a href="#" className="hover:text-white transition">Features</a></li>
+              <li><a href="#" className="hover:text-white transition">Pricing</a></li>
+              <li><a href="#" className="hover:text-white transition">Security</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4 className="font-bold mb-4">Company</h4>
+            <ul className="space-y-2 text-sm text-blue-200">
+              <li><a href="#" className="hover:text-white transition">About</a></li>
+              <li><a href="#" className="hover:text-white transition">Blog</a></li>
+              <li><a href="#" className="hover:text-white transition">Contact</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4 className="font-bold mb-4">Legal</h4>
+            <ul className="space-y-2 text-sm text-blue-200">
+              <li><a href="#" className="hover:text-white transition">Privacy</a></li>
+              <li><a href="#" className="hover:text-white transition">Terms</a></li>
+              <li><a href="#" className="hover:text-white transition">Contact</a></li>
+            </ul>
+          </div>
+        </div>
+        <div className="border-t border-blue-800 pt-8">
+          <p className="text-center text-sm text-blue-200">
+            © 2024 Aetherinv. All rights reserved.
+          </p>
+        </div>
       </footer>
     </div>
   );
 };
+
+export { LandingPage };
+export default LandingPage;

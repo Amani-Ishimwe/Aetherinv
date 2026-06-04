@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { Layout } from './components/Layout';
 import type { ActiveView } from './components/Layout';
@@ -25,45 +25,58 @@ type AuthScreen = 'landing' | 'login' | 'register';
 const AppContent: React.FC = () => {
   const { isAuthenticated, loading } = useAuth();
   const [currentView, setCurrentView] = useState<ActiveView>('dashboard');
-  const [authScreen, setAuthScreen] = useState<AuthScreen>('landing');
+
+  // Always start on the landing page when the browser tab is opened or refreshed.
+  // We use sessionStorage so it resets to 'landing' on every page reload,
+  // but persists across SPA navigation within the same tab.
+  const [authScreen, setAuthScreen] = useState<AuthScreen>(() => {
+    const inSession = sessionStorage.getItem('aetherinv_screen');
+    return (inSession as AuthScreen) || 'landing';
+  });
+
+  // Keep sessionStorage in sync whenever the screen changes
+  useEffect(() => {
+    sessionStorage.setItem('aetherinv_screen', authScreen);
+  }, [authScreen]);
+
+  // When the user successfully authenticates, clear the session flag
+  // so that on next page load they also see the landing page first.
+  useEffect(() => {
+    if (!isAuthenticated && !loading) {
+      // Only reset to landing if sessionStorage has no override
+      const inSession = sessionStorage.getItem('aetherinv_screen');
+      if (!inSession) setAuthScreen('landing');
+    }
+  }, [isAuthenticated, loading]);
+
+  const goToLogin    = () => setAuthScreen('login');
+  const goToRegister = () => setAuthScreen('register');
+  const goToLanding  = () => setAuthScreen('landing');
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-darkblue-950 flex flex-col items-center justify-center text-slate-100">
+      <div className="min-h-screen bg-darkblue-950 flex flex-col items-center justify-center">
         <div className="w-16 h-16 bg-gradient-to-br from-brandorange-500 to-brandorange-700 rounded-2xl flex items-center justify-center shadow-2xl shadow-brandorange-500/40 mb-6 animate-pulse">
           <i className="fa-solid fa-boxes-stacked text-white text-2xl"></i>
         </div>
-        <p className="text-sm font-semibold tracking-widest uppercase text-slate-400">Loading System...</p>
+        <p className="text-sm font-semibold tracking-widest uppercase text-slate-500">Loading...</p>
       </div>
     );
   }
 
-  if (!isAuthenticated) {
-    if (authScreen === 'register') {
-      return (
-        <Register
-          onToggleView={() => setAuthScreen('login')}
-          onBackToLanding={() => setAuthScreen('landing')}
-        />
-      );
-    }
+  // ── Unauthenticated screens ────────────────────────────────────────────
+  if (!isAuthenticated || authScreen === 'landing') {
     if (authScreen === 'login') {
-      return (
-        <Login
-          onToggleView={() => setAuthScreen('register')}
-          onBackToLanding={() => setAuthScreen('landing')}
-        />
-      );
+      return <Login onToggleView={goToRegister} onBackToLanding={goToLanding} />;
     }
-    // Default: landing
-    return (
-      <LandingPage
-        onLogin={() => setAuthScreen('login')}
-        onRegister={() => setAuthScreen('register')}
-      />
-    );
+    if (authScreen === 'register') {
+      return <Register onToggleView={goToLogin} onBackToLanding={goToLanding} />;
+    }
+    // Default: always show landing
+    return <LandingPage onLogin={goToLogin} onRegister={goToRegister} />;
   }
 
+  // ── Authenticated app ──────────────────────────────────────────────────
   const renderView = () => {
     switch (currentView) {
       case 'dashboard':   return <Dashboard />;
