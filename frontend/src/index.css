@@ -1,0 +1,96 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Bricolage Grotesque", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Bricolage Grotesque", ui-serif, Georgia, serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  
+  --color-brandorange-50: #fff7ed;
+  --color-brandorange-100: #ffedd5;
+  --color-brandorange-200: #fed7aa;
+  --color-brandorange-300: #fdba74;
+  --color-brandorange-400: #fb923c;
+  --color-brandorange-500: #f97316;
+  --color-brandorange-600: #ea580c;
+  --color-brandorange-700: #c2410c;
+  --color-brandorange-800: #9a3412;
+  --color-brandorange-900: #7c2d12;
+  --color-brandorange-950: #431407;
+
+  --color-darkblue-50: #f4f6fc;
+  --color-darkblue-100: #e9ecf8;
+  --color-darkblue-200: #c8d3ee;
+  --color-darkblue-300: #97ade1;
+  --color-darkblue-400: #5f80d1;
+  --color-darkblue-500: #3c5ac0;
+  --color-darkblue-600: #2c44a2;
+  --color-darkblue-700: #243684;
+  --color-darkblue-800: #212e6c;
+  --color-darkblue-850: #141c46;
+  --color-darkblue-900: #0e1434;
+  --color-darkblue-950: #060a1d;
+  
+  --color-slate-350: #cbd5e1;
+  --color-slate-450: #94a3b8;
+  --color-slate-550: #64748b;
+  --color-slate-650: #475569;
+}
+
+/* Custom base styles for high quality aesthetics */
+body, button, input, select, textarea {
+  margin: 0;
+  font-family: 'Bricolage Grotesque', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #060a1d; /* Deep dark blue */
+  color: #f1f5f9;
+}
+
+/* Glassmorphism utility */
+.glass {
+  background: rgba(14, 20, 52, 0.7); /* darkblue-900 with opacity */
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.glass-card {
+  background: rgba(6, 10, 29, 0.65); /* darkblue-950 with opacity */
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #060a1d;
+}
+::-webkit-scrollbar-thumb {
+  background: #141c46;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #f97316;
+}
+
+/* Keyframe animations */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-8px); }
+}
+.animate-fadeIn    { animation: fadeIn    0.5s ease both; }
+.animate-fadeInUp  { animation: fadeInUp  0.6s ease both; }
+.animate-float     { animation: float     3s ease-in-out infinite; }
+
