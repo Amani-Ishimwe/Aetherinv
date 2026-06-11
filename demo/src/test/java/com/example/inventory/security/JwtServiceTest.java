@@ -19,9 +19,9 @@ class JwtServiceTest {
     @BeforeEach
     void setUp() {
         jwtService = new JwtService();
-        // Set the private @Value fields using ReflectionTestUtils
+        
         ReflectionTestUtils.setField(jwtService, "secretKey", "404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970");
-        ReflectionTestUtils.setField(jwtService, "jwtExpiration", 86400000L); // 1 day
+        ReflectionTestUtils.setField(jwtService, "jwtExpiration", 86400000L); 
 
         user = User.builder()
                 .id(1)
@@ -80,13 +80,13 @@ class JwtServiceTest {
 
     @Test
     void testIsTokenExpired_WithShortExpiration() {
-        // Set a very short expiration (e.g. negative to simulate already expired)
+        
         ReflectionTestUtils.setField(jwtService, "jwtExpiration", -1000L);
         
         String token = jwtService.generateToken(user);
         assertNotNull(token);
 
-        // Expect exception when parsing or false when validating
+        
         assertThrows(Exception.class, () -> jwtService.isTokenValid(token, user));
     }
 }

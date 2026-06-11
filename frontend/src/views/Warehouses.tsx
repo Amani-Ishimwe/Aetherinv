@@ -45,22 +45,22 @@ interface TransferRequest {
 export const Warehouses: React.FC = () => {
   const { user } = useAuth();
   
-  // Real products list
+  
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [transferLoading, setTransferLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   
-  // Form states
+  
   const [fromWarehouse, setFromWarehouse] = useState('WH-01');
   const [toWarehouse, setToWarehouse] = useState('WH-02');
   const [selectedProductId, setSelectedProductId] = useState<number | ''>('');
   const [transferQty, setTransferQty] = useState<number>(0);
 
-  // Warehouses list from backend
+  
   const [warehouses, setWarehouses] = useState<Warehouse[]>([]);
 
-  // Transfer approvals queue from backend
+  
   const [transfers, setTransfers] = useState<TransferRequest[]>([]);
 
   const loadData = async () => {
@@ -161,7 +161,7 @@ export const Warehouses: React.FC = () => {
 
     setTransferLoading(true);
     try {
-      // Find current stock
+      
       const prod = products.find(p => p.id === transfer.productId);
       if (!prod) throw new Error('Product not found in current inventory database.');
 
@@ -169,14 +169,14 @@ export const Warehouses: React.FC = () => {
         throw new Error(`Insufficient stock left to approve this transfer. Only ${prod.quantity} units remaining.`);
       }
 
-      // Deduct stock from the central product record
+      
       const updatedProduct = {
         ...prod,
         quantity: prod.quantity - transfer.qty
       };
       await api.put(`/products/${prod.id}`, updatedProduct);
 
-      // Update transfer status
+      
       const updatedTransfer = {
         sku: transfer.sku,
         productName: transfer.productName,
@@ -188,10 +188,10 @@ export const Warehouses: React.FC = () => {
       };
       await api.put(`/transfers/${transfer.id}`, updatedTransfer);
 
-      // Audit Log
+      
       addAuditLog('UPDATE', prod.sku, `Approved Stock Transfer ${transfer.id}: Moved ${transfer.qty} pcs (${transfer.from} → ${transfer.to})`, user?.email || 'System');
 
-      loadData(); // reload
+      loadData(); 
     } catch (err: any) {
       setErrorMsg(err.message || 'Error occurred while approving stock transfer.');
     } finally {
@@ -247,7 +247,7 @@ export const Warehouses: React.FC = () => {
         </div>
       )}
 
-      {/* Warehouses Cards Grid */}
+      
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {warehouses.map(w => (
           <div key={w.id} className="glass-card rounded-2xl p-6 border border-white/5 relative group hover:border-white/10 transition-all">
@@ -274,7 +274,7 @@ export const Warehouses: React.FC = () => {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         
-        {/* Left Columns: Stock Transfer Draft form */}
+        
         <div className="lg:col-span-1 glass-card rounded-2xl p-6 border border-white/5">
           <div className="flex items-center space-x-3 mb-6">
             <div className="p-2.5 bg-brandorange-50/10 border border-brandorange-500/20 rounded-xl text-brandorange-500">
@@ -357,7 +357,7 @@ export const Warehouses: React.FC = () => {
           )}
         </div>
 
-        {/* Right Columns: Transfer Approvals Queue */}
+        
         <div className="lg:col-span-2 glass-card rounded-2xl p-6 border border-white/5 flex flex-col">
           <div className="mb-6 shrink-0">
             <h3 className="text-lg font-bold text-white flex items-center space-x-2">

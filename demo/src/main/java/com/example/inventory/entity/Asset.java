@@ -32,9 +32,9 @@ public class Asset {
 
     private BigDecimal currentValue;
 
-    private BigDecimal depreciationRate; // percent
+    private BigDecimal depreciationRate; 
 
     private String purchaseDate;
 
-    private String status; // ACTIVE, IN_REPAIR, RETIRED
+    private String status; 
 }

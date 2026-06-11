@@ -26,22 +26,22 @@ interface Product {
 export const Inventory: React.FC = () => {
   const { user } = useAuth();
   
-  // Products from backend
+  
   const [products, setProducts] = useState<Product[]>([]);
   const [loadingProducts, setLoadingProducts] = useState(true);
   const [submitLoading, setSubmitLoading] = useState(false);
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
 
-  // Form states
+  
   const [actionType, setActionType] = useState<'stock-in' | 'stock-out' | 'adjust' | 'damage-return'>('stock-in');
   const [selectedProductId, setSelectedProductId] = useState<number | ''>('');
   const [changeQty, setChangeQty] = useState<number>(0);
   const [reason, setReason] = useState('Purchase replenishment');
   
-  // Damage/Return Sub-type
+  
   const [damageOrReturn, setDamageOrReturn] = useState<'DAMAGE' | 'RETURN'>('DAMAGE');
 
-  // Logs
+  
   const [damagedLogs, setDamagedLogs] = useState([
     { id: 1, sku: 'ELC-LPT-01', name: 'EliteBook Laptop', qty: 2, type: 'DAMAGE', reason: 'Cracked screen during transit', date: '2026-06-03' },
     { id: 2, sku: 'MED-KIT-05', name: 'First Aid Kit', qty: 5, type: 'RETURN', reason: 'Customer returned: wrong variant', date: '2026-06-02' },
@@ -93,7 +93,7 @@ export const Inventory: React.FC = () => {
       }
       newQty -= changeQty;
     } else if (actionType === 'adjust') {
-      newQty = changeQty; // Direct set
+      newQty = changeQty; 
     } else if (actionType === 'damage-return') {
       if (damageOrReturn === 'DAMAGE') {
         if (targetProduct.quantity < changeQty) {
@@ -102,13 +102,13 @@ export const Inventory: React.FC = () => {
         }
         newQty -= changeQty;
       } else {
-        newQty += changeQty; // returned items back to shelf
+        newQty += changeQty; 
       }
     }
 
     setSubmitLoading(true);
     try {
-      // Execute Real Put to backend
+      
       const updatedProduct = {
         ...targetProduct,
         quantity: newQty
@@ -116,11 +116,11 @@ export const Inventory: React.FC = () => {
       
       await api.put(`/products/${targetProduct.id}`, updatedProduct);
 
-      // Audit Log
+      
       const auditMsg = `${actionType.toUpperCase()}: ${reason} (Qty: ${changeQty})`;
       addAuditLog(actionLogType, targetProduct.sku, `${targetProduct.name} - ${auditMsg}`, user?.email || 'System');
 
-      // Update Damage/Return logs locally if applicable
+      
       if (actionType === 'damage-return') {
         const newLog = {
           id: Math.random(),
@@ -139,11 +139,11 @@ export const Inventory: React.FC = () => {
         text: `Successfully executed stock transaction! Quantity of ${targetProduct.name} is now ${newQty}.`
       });
 
-      // Clear input
+      
       setChangeQty(0);
       setReason('');
       
-      // Reload products list
+      
       loadProducts();
     } catch (err: any) {
       console.error(err);
@@ -163,10 +163,10 @@ export const Inventory: React.FC = () => {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         
-        {/* Left Column: Transaction Forms */}
+        
         <div className="lg:col-span-2 space-y-6">
           
-          {/* Card: Action selector */}
+          
           <div className="glass-card rounded-2xl p-6 border border-white/5">
             <div className="flex flex-wrap items-center gap-3 mb-6">
               <button
@@ -229,7 +229,7 @@ export const Inventory: React.FC = () => {
               </div>
             )}
 
-            {/* Main Form */}
+            
             {loadingProducts ? (
               <div className="py-12 flex flex-col items-center justify-center">
                 <Loader2 className="h-8 w-8 text-brandorange-500 animate-spin mb-3" />
@@ -238,7 +238,7 @@ export const Inventory: React.FC = () => {
             ) : (
               <form onSubmit={handleActionSubmit} className="space-y-4">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {/* Select Product */}
+                  
                   <div>
                     <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Select Inventory Item</label>
                     <select
@@ -256,7 +256,7 @@ export const Inventory: React.FC = () => {
                     </select>
                   </div>
 
-                  {/* Quantity to Alter */}
+                  
                   <div>
                     <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">
                       {actionType === 'adjust' ? 'Set Total Stock Count' : 'Quantity Units'}
@@ -301,7 +301,7 @@ export const Inventory: React.FC = () => {
                   </div>
                 )}
 
-                {/* Reason Notes */}
+                
                 <div>
                   <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Transaction Notes / Reference</label>
                   <input
@@ -333,7 +333,7 @@ export const Inventory: React.FC = () => {
 
         </div>
 
-        {/* Right Column: Damaged & Returned Stock Logs */}
+        
         <div className="glass-card rounded-2xl p-6 border border-white/5 flex flex-col">
           <div className="mb-5 shrink-0">
             <h3 className="text-lg font-bold text-white flex items-center space-x-2">

@@ -22,13 +22,13 @@ export const ConfirmModal: React.FC<ConfirmModalProps> = ({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-      {/* Backdrop */}
+      
       <div 
         className="fixed inset-0 bg-darkblue-950/80 backdrop-blur-sm transition-opacity" 
         onClick={onClose}
       />
 
-      {/* Modal Container */}
+      
       <div className="bg-darkblue-900 border border-darkblue-800 rounded-2xl w-full max-w-sm shadow-2xl relative z-10 p-6 overflow-hidden">
         <div className="flex items-center space-x-3 mb-4">
           <div className="p-2 bg-red-500/10 border border-red-500/20 rounded-xl text-red-500">

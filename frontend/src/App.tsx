@@ -26,24 +26,24 @@ const AppContent: React.FC = () => {
   const { isAuthenticated, loading } = useAuth();
   const [currentView, setCurrentView] = useState<ActiveView>('dashboard');
 
-  // Always start on the landing page when the browser tab is opened or refreshed.
-  // We use sessionStorage so it resets to 'landing' on every page reload,
-  // but persists across SPA navigation within the same tab.
+  
+  
+  
   const [authScreen, setAuthScreen] = useState<AuthScreen>(() => {
     const inSession = sessionStorage.getItem('aetherinv_screen');
     return (inSession as AuthScreen) || 'landing';
   });
 
-  // Keep sessionStorage in sync whenever the screen changes
+  
   useEffect(() => {
     sessionStorage.setItem('aetherinv_screen', authScreen);
   }, [authScreen]);
 
-  // When the user successfully authenticates, clear the session flag
-  // so that on next page load they also see the landing page first.
+  
+  
   useEffect(() => {
     if (!isAuthenticated && !loading) {
-      // Only reset to landing if sessionStorage has no override
+      
       const inSession = sessionStorage.getItem('aetherinv_screen');
       if (!inSession) setAuthScreen('landing');
     }
@@ -64,7 +64,7 @@ const AppContent: React.FC = () => {
     );
   }
 
-  // ── Unauthenticated screens ────────────────────────────────────────────
+  
   if (!isAuthenticated || authScreen === 'landing') {
     if (authScreen === 'login') {
       return <Login onToggleView={goToRegister} onBackToLanding={goToLanding} />;
@@ -72,11 +72,11 @@ const AppContent: React.FC = () => {
     if (authScreen === 'register') {
       return <Register onToggleView={goToLogin} onBackToLanding={goToLanding} />;
     }
-    // Default: always show landing
+    
     return <LandingPage onLogin={goToLogin} onRegister={goToRegister} />;
   }
 
-  // ── Authenticated app ──────────────────────────────────────────────────
+  
   const renderView = () => {
     switch (currentView) {
       case 'dashboard':   return <Dashboard />;

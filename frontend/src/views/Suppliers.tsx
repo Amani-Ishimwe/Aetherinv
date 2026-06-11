@@ -10,7 +10,7 @@ interface Supplier {
   phone: string;
   address: string;
   productsSupplied: string[];
-  rating: number; // 1-5
+  rating: number; 
   outstandingBalance: number;
 }
 
@@ -19,10 +19,10 @@ export const Suppliers: React.FC = () => {
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   
-  // Suppliers catalog from backend
+  
   const [suppliers, setSuppliers] = useState<Supplier[]>([]);
 
-  // Form states
+  
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
@@ -77,7 +77,7 @@ export const Suppliers: React.FC = () => {
     try {
       await api.post('/suppliers', newSupplier);
       fetchSuppliers();
-      // Clear forms
+      
       setName('');
       setEmail('');
       setPhone('');
@@ -108,7 +108,7 @@ export const Suppliers: React.FC = () => {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         
-        {/* Left Column: Vendor Profiles list */}
+        
         <div className="lg:col-span-2 space-y-6">
           {loading ? (
             <div className="py-20 flex flex-col items-center justify-center bg-darkblue-950/20 border border-darkblue-850 rounded-2xl">
@@ -143,7 +143,7 @@ export const Suppliers: React.FC = () => {
                     <h3 className="font-extrabold text-lg text-white group-hover:text-brandorange-400 transition-colors capitalize">{sup.name}</h3>
                     <span className="text-[10px] text-slate-500 font-mono block mt-0.5">{sup.id}</span>
                     
-                    {/* Contact lists */}
+                    
                     <div className="space-y-2 mt-4 text-xs text-slate-400">
                       <p className="flex items-center space-x-2.5 truncate">
                         <Mail className="h-4 w-4 text-slate-550 shrink-0" />
@@ -159,7 +159,7 @@ export const Suppliers: React.FC = () => {
                       </p>
                     </div>
 
-                    {/* Supplied tags */}
+                    
                     {sup.productsSupplied && sup.productsSupplied.length > 0 && (
                       <div className="flex flex-wrap gap-1 mt-4">
                         {sup.productsSupplied.map(p => (
@@ -183,7 +183,7 @@ export const Suppliers: React.FC = () => {
           )}
         </div>
 
-        {/* Right Column: Register Supplier Partner Form */}
+        
         <div className="glass-card rounded-2xl p-6 border border-white/5 h-fit">
           <div className="flex items-center space-x-3 mb-5">
             <div className="p-2.5 bg-brandorange-50/10 border border-brandorange-500/20 rounded-xl text-brandorange-500">

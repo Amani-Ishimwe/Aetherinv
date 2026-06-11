@@ -32,7 +32,7 @@ public class PurchaseOrder {
 
     private BigDecimal unitCost;
 
-    private String status; // DRAFT, APPROVED, DELIVERED
+    private String status; 
 
     private Boolean invoiceUploaded;
 

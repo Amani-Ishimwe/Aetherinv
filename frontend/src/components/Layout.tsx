@@ -86,7 +86,7 @@ export const Layout: React.FC<LayoutProps> = ({ children, currentView, setView }
     try {
       const res = await api.get('/products/low-stock?threshold=5');
       if (res.data) setLowStockCount(res.data.length);
-    } catch { /* silent */ }
+    } catch {  }
   };
 
   useEffect(() => {
@@ -106,11 +106,11 @@ export const Layout: React.FC<LayoutProps> = ({ children, currentView, setView }
     .toUpperCase()
     .slice(0, 2);
 
-  // ── Sidebar ───────────────────────────────────────────────────────────
+  
   const SidebarContent = ({ onClose }: { onClose?: () => void }) => (
     <div className="flex flex-col h-full" style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }}>
 
-      {/* ── Logo strip ───────────────────────────────────────────────── */}
+      {}
       <div className="flex items-center gap-3 px-5 py-5 shrink-0 border-b border-white/5">
         <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-brandorange-500 to-brandorange-700 flex items-center justify-center shadow-lg shadow-brandorange-600/40 shrink-0">
           <i className="fa-solid fa-boxes-stacked text-white text-sm"></i>
@@ -131,11 +131,11 @@ export const Layout: React.FC<LayoutProps> = ({ children, currentView, setView }
         )}
       </div>
 
-      {/* ── Nav groups ────────────────────────────────────────────────── */}
+      {}
       <nav className="flex-1 overflow-y-auto py-4 px-3 space-y-5 scrollbar-thin">
         {navGroups.map((group) => (
           <div key={group.title}>
-            {/* Section label */}
+            {}
             <p className="text-[9.5px] font-black uppercase tracking-[0.2em] text-slate-600 px-3 mb-1.5">
               {group.title}
             </p>
@@ -156,12 +156,12 @@ export const Layout: React.FC<LayoutProps> = ({ children, currentView, setView }
                       }
                     `}
                   >
-                    {/* Active background glow */}
+                    {}
                     {active && (
                       <span className="absolute inset-0 bg-gradient-to-r from-brandorange-600 to-brandorange-500 rounded-xl shadow-lg shadow-brandorange-600/30" />
                     )}
 
-                    {/* Icon box */}
+                    {}
                     <span className={`
                       relative z-10 w-8 h-8 flex items-center justify-center rounded-lg text-sm shrink-0 transition-all duration-200
                       ${active
@@ -172,10 +172,10 @@ export const Layout: React.FC<LayoutProps> = ({ children, currentView, setView }
                       <i className={item.icon}></i>
                     </span>
 
-                    {/* Label */}
+                    {}
                     <span className="relative z-10 truncate">{item.name}</span>
 
-                    {/* Active chevron */}
+                    {}
                     {active && (
                       <i className="fa-solid fa-chevron-right relative z-10 text-[10px] text-white/50 ml-auto shrink-0"></i>
                     )}
@@ -187,11 +187,11 @@ export const Layout: React.FC<LayoutProps> = ({ children, currentView, setView }
         ))}
       </nav>
 
-      {/* ── User card ─────────────────────────────────────────────────── */}
+      {}
       <div className="shrink-0 p-3 border-t border-white/5">
-        {/* Profile row */}
+        {}
         <div className="flex items-center gap-3 px-3 py-3 rounded-xl bg-white/5 border border-white/5 mb-2">
-          {/* Avatar */}
+          {}
           <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-brandorange-500 to-brandorange-700 flex items-center justify-center text-white text-xs font-black shrink-0 shadow-md shadow-brandorange-600/30">
             {userInitials}
           </div>
@@ -205,7 +205,7 @@ export const Layout: React.FC<LayoutProps> = ({ children, currentView, setView }
           <div className="w-2 h-2 rounded-full bg-green-500 shrink-0 shadow-sm shadow-green-500/50"></div>
         </div>
 
-        {/* Sign out */}
+        {}
         <button
           onClick={logout}
           className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-semibold text-slate-500 hover:text-red-400 hover:bg-red-500/10 transition-all duration-200 group"
@@ -224,7 +224,7 @@ export const Layout: React.FC<LayoutProps> = ({ children, currentView, setView }
       className="min-h-screen bg-darkblue-950 text-slate-100 flex flex-col md:flex-row"
       style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }}
     >
-      {/* ── Mobile top bar ─────────────────────────────────────────────── */}
+      {}
       <div className="md:hidden flex items-center justify-between px-4 py-3 bg-darkblue-900/95 backdrop-blur border-b border-white/5 sticky top-0 z-50">
         <div className="flex items-center gap-2.5">
           <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-brandorange-500 to-brandorange-700 flex items-center justify-center shadow-md shadow-brandorange-600/30">
@@ -253,7 +253,7 @@ export const Layout: React.FC<LayoutProps> = ({ children, currentView, setView }
         </div>
       </div>
 
-      {/* ── Mobile drawer overlay ───────────────────────────────────────── */}
+      {}
       {mobileOpen && (
         <div className="md:hidden fixed inset-0 z-[60] flex">
           <div
@@ -266,17 +266,17 @@ export const Layout: React.FC<LayoutProps> = ({ children, currentView, setView }
         </div>
       )}
 
-      {/* ── Desktop sidebar ─────────────────────────────────────────────── */}
+      {}
       <aside className="hidden md:flex w-64 shrink-0 sticky top-0 h-screen bg-darkblue-900 border-r border-white/5 flex-col shadow-xl shadow-black/30">
         <SidebarContent />
       </aside>
 
-      {/* ── Main content area ───────────────────────────────────────────── */}
+      {}
       <main className="flex-1 flex flex-col min-w-0 overflow-y-auto">
 
-        {/* Desktop top header */}
+        {}
         <header className="hidden md:flex items-center justify-between bg-darkblue-950/80 backdrop-blur-md border-b border-white/5 px-8 py-4 sticky top-0 z-30 shrink-0">
-          {/* Page title */}
+          {}
           <div className="flex items-center gap-4">
             <div>
               <h1 className="text-lg font-black text-white tracking-tight">{meta.title}</h1>
@@ -284,15 +284,15 @@ export const Layout: React.FC<LayoutProps> = ({ children, currentView, setView }
             </div>
           </div>
 
-          {/* Right actions */}
+          {}
           <div className="flex items-center gap-2">
-            {/* Role badge */}
+            {}
             <div className="flex items-center gap-2 px-3 py-2 bg-brandorange-500/10 border border-brandorange-500/20 rounded-xl">
               <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse"></span>
               <span className="text-xs font-bold text-brandorange-400 capitalize">{user?.role || 'Admin'}</span>
             </div>
 
-            {/* User chip */}
+            {}
             <div className="flex items-center gap-2.5 px-3 py-2 bg-white/5 border border-white/5 rounded-xl">
               <div className="w-6 h-6 rounded-lg bg-gradient-to-br from-brandorange-500 to-brandorange-700 flex items-center justify-center text-white text-[10px] font-black shrink-0">
                 {userInitials}
@@ -300,7 +300,7 @@ export const Layout: React.FC<LayoutProps> = ({ children, currentView, setView }
               <span className="text-sm font-semibold text-slate-300">{userDisplayName}</span>
             </div>
 
-            {/* Notification bell */}
+            {}
             <button
               onClick={() => setNotifOpen(true)}
               className="relative w-10 h-10 flex items-center justify-center border border-white/10 hover:border-brandorange-500/40 bg-white/5 hover:bg-white/10 rounded-xl text-slate-400 hover:text-white transition-all duration-200"
@@ -316,13 +316,13 @@ export const Layout: React.FC<LayoutProps> = ({ children, currentView, setView }
           </div>
         </header>
 
-        {/* Page content */}
+        {}
         <div className="flex-1 p-4 md:p-8">
           {children}
         </div>
       </main>
 
-      {/* Notification slide-over */}
+      {}
       <NotificationPanel
         isOpen={notifOpen}
         onClose={() => setNotifOpen(false)}

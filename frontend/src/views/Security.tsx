@@ -17,26 +17,26 @@ import {
 export const Security: React.FC = () => {
   const { user, updateUserRole } = useAuth();
   
-  // Role selection state
+  
   const [selectedRole, setSelectedRole] = useState<UserRole>(user?.role || 'Super Admin');
   
-  // 2FA state
+  
   const [is2faSetup, setIs2faSetup] = useState(false);
   const [showBackupCodes, setShowBackupCodes] = useState(false);
   const [verificationCode, setVerificationCode] = useState('');
   const [is2faActive, setIs2faActive] = useState(false);
 
-  // Password reset state
+  
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [resetSuccess, setResetSuccess] = useState(false);
   const [resetError, setResetError] = useState<string | null>(null);
   
-  // Password toggle
+  
   const [showPasswords, setShowPasswords] = useState(false);
 
-  // Mock roles directories
+  
   const roles: UserRole[] = [
     'Super Admin',
     'Admin',
@@ -47,14 +47,14 @@ export const Security: React.FC = () => {
     'Viewer'
   ];
 
-  // Mock sessions list
+  
   const [sessions, setSessions] = useState([
     { id: '1', device: 'Chrome on Windows 11 (PC)', location: 'Kigali, Rwanda', active: true, time: 'Current Session' },
     { id: '2', device: 'Safari on iPhone 15 Pro', location: 'Musanze, Rwanda', active: false, time: '2 hours ago' },
     { id: '3', device: 'Firefox on macOS Sonoma', location: 'Gisenyi, Rwanda', active: false, time: '3 days ago' },
   ]);
 
-  // Mock security logs
+  
   const securityLogs = [
     { id: 1, action: 'User login initiated', status: 'SUCCESS', ip: '197.243.12.9', date: 'June 04, 2026, 08:15 AM' },
     { id: 2, action: 'Role authorization switch', status: 'SUCCESS', ip: '197.243.12.9', date: 'June 04, 2026, 08:00 AM' },
@@ -98,7 +98,7 @@ export const Security: React.FC = () => {
       return setResetError('Confirm password does not match new password.');
     }
 
-    // Success Mock
+    
     setResetSuccess(true);
     setCurrentPassword('');
     setNewPassword('');
@@ -115,10 +115,10 @@ export const Security: React.FC = () => {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         
-        {/* Left Column: Role and Password Reset */}
+        
         <div className="lg:col-span-2 space-y-8">
           
-          {/* Card 1: Role Switcher */}
+          
           <div className="glass-card rounded-2xl p-6 border border-white/5">
             <div className="flex items-center space-x-3 mb-6">
               <div className="p-2.5 bg-brandorange-500/10 border border-brandorange-500/20 rounded-xl text-brandorange-500">
@@ -144,7 +144,7 @@ export const Security: React.FC = () => {
                 </select>
               </div>
 
-              {/* Role Permissions description */}
+              
               <div className="text-xs text-slate-450 border-t border-darkblue-800/40 pt-3 leading-relaxed">
                 <strong className="text-slate-300">Note:</strong> Switching roles will adjust your frontend client access right away:
                 <ul className="list-disc list-inside mt-2 space-y-1">
@@ -156,7 +156,7 @@ export const Security: React.FC = () => {
             </div>
           </div>
 
-          {/* Card 2: Password Reset Form */}
+          
           <div className="glass-card rounded-2xl p-6 border border-white/5">
             <div className="flex items-center space-x-3 mb-6">
               <div className="p-2.5 bg-brandorange-500/10 border border-brandorange-500/20 rounded-xl text-brandorange-500">
@@ -247,7 +247,7 @@ export const Security: React.FC = () => {
             </form>
           </div>
 
-          {/* Card 3: Active Sessions list */}
+          
           <div className="glass-card rounded-2xl p-6 border border-white/5">
             <div className="flex items-center space-x-3 mb-6">
               <div className="p-2.5 bg-brandorange-500/10 border border-brandorange-500/20 rounded-xl text-brandorange-500">
@@ -297,10 +297,10 @@ export const Security: React.FC = () => {
 
         </div>
 
-        {/* Right Column: 2FA & Security Logs */}
+        
         <div className="space-y-8">
           
-          {/* Card 1: Mock 2FA setup */}
+          
           <div className="glass-card rounded-2xl p-6 border border-white/5 flex flex-col">
             <div className="flex items-center space-x-3 mb-5 shrink-0">
               <div className="p-2.5 bg-brandorange-500/10 border border-brandorange-500/20 rounded-xl text-brandorange-500">
@@ -350,7 +350,7 @@ export const Security: React.FC = () => {
             ) : is2faSetup ? (
               <form onSubmit={handle2faVerify} className="space-y-4 bg-darkblue-950/30 border border-darkblue-800/80 rounded-xl p-4 flex-1">
                 <div className="flex items-center justify-center p-3 bg-white rounded-lg w-28 h-28 mx-auto">
-                  {/* Custom CSS/SVG QR code placeholder */}
+                  
                   <div className="w-24 h-24 bg-darkblue-950 grid grid-cols-6 gap-0.5 p-1 rounded">
                     {[...Array(36)].map((_, i) => (
                       <span key={i} className={`h-full w-full rounded-[1px] ${
@@ -404,7 +404,7 @@ export const Security: React.FC = () => {
             )}
           </div>
 
-          {/* Card 2: Security Event Log */}
+          
           <div className="glass-card rounded-2xl p-6 border border-white/5 flex flex-col">
             <div className="mb-4 shrink-0">
               <h3 className="text-lg font-bold text-white flex items-center space-x-2">

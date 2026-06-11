@@ -32,15 +32,15 @@ export const Dashboard: React.FC = () => {
     setLoading(true);
     setError(null);
     try {
-      // 1. Fetch category stats
+      
       const statsRes = await api.get('/products/stats');
       setStats(statsRes.data || {});
 
-      // 2. Fetch low stock with dynamic threshold
+      
       const lowStockRes = await api.get(`/products/low-stock?threshold=${currentThreshold}`);
       setLowStock(lowStockRes.data || []);
 
-      // 3. Fetch all products to calculate total valuation and category asset metrics
+      
       const productsRes = await api.get('/products?size=1000');
       const productsList = productsRes.data?.content || [];
       setAllProducts(productsList);
@@ -57,7 +57,7 @@ export const Dashboard: React.FC = () => {
     fetchData(threshold);
   }, [threshold]);
 
-  // Load audit logs
+  
   useEffect(() => {
     const fetchLogs = async () => {
       const data = await getAuditLogs();
@@ -73,13 +73,13 @@ export const Dashboard: React.FC = () => {
     };
   }, []);
 
-  // Calculate Metrics
+  
   const totalValuation = allProducts.reduce((sum, p) => sum + (p.price * p.quantity), 0);
   const totalItems = allProducts.reduce((sum, p) => sum + p.quantity, 0);
   const uniqueItemsCount = allProducts.length;
   const categoriesCount = Object.keys(stats).length;
 
-  // Calculate Category Assets Metrics dynamically
+  
   const categoryMetrics: Record<string, CategoryMetric> = {};
   allProducts.forEach(p => {
     const cat = p.category || 'Uncategorized';
@@ -135,7 +135,7 @@ export const Dashboard: React.FC = () => {
 
   return (
     <div className="space-y-8 animate-fadeIn">
-      {/* Header */}
+      
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
           <h2 className="text-3xl font-extrabold text-white">Business Overview</h2>
@@ -158,7 +158,7 @@ export const Dashboard: React.FC = () => {
         </div>
       )}
 
-      {/* KPI Cards Grid */}
+      
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {kpis.map((kpi, idx) => (
           <div
@@ -187,13 +187,13 @@ export const Dashboard: React.FC = () => {
         ))}
       </div>
 
-      {/* Main Content Layout */}
+      
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         
-        {/* Left Columns: Low Stock & Category Asset Table */}
+        
         <div className="lg:col-span-2 space-y-8">
           
-          {/* Card 1: Low Stock Warnings */}
+          
           <div className="glass-card rounded-2xl p-6 border border-white/5 flex flex-col">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
               <div>
@@ -204,7 +204,7 @@ export const Dashboard: React.FC = () => {
                 <p className="text-xs text-slate-400 mt-0.5">Products with very few units remaining</p>
               </div>
 
-              {/* Range Slider for Threshold */}
+              
               <div className="flex items-center gap-3 bg-darkblue-900 border border-darkblue-800 rounded-xl px-4 py-2 text-xs">
                 <i className="fa-solid fa-sliders text-brandorange-500 shrink-0"></i>
                 <span className="text-slate-300 font-medium">Alert at: <strong>{threshold}</strong> units</span>
@@ -267,7 +267,7 @@ export const Dashboard: React.FC = () => {
             )}
           </div>
 
-          {/* Card 2: Category Insights */}
+          
           <div className="glass-card rounded-2xl p-6 border border-white/5">
             <div className="mb-6">
               <h3 className="text-lg font-bold text-white flex items-center gap-2">
@@ -319,10 +319,10 @@ export const Dashboard: React.FC = () => {
 
         </div>
 
-        {/* Right Column: Chart & Audit Logs */}
+        
         <div className="space-y-8">
           
-          {/* Allocation Donut Chart */}
+          
           <div className="glass-card rounded-2xl p-6 border border-white/5 flex flex-col">
             <div className="mb-4">
               <h3 className="text-lg font-bold text-white flex items-center gap-2">
@@ -343,14 +343,14 @@ export const Dashboard: React.FC = () => {
               </div>
             ) : (
               <div className="flex-1 flex flex-col justify-between">
-                {/* SVG Visualizer */}
+                
                 <div className="relative flex items-center justify-center h-40 my-3">
                   <svg className="w-36 h-36 transform -rotate-90">
                     <circle cx="72" cy="72" r="54" stroke="#1e293b" strokeWidth="8" fill="transparent" />
                     {(() => {
                       const totalVal = Object.values(stats).reduce((a, b) => a + b, 0);
                       let accumulatedPercent = 0;
-                      const strokeDasharray = 2 * Math.PI * 54; // ~339.3
+                      const strokeDasharray = 2 * Math.PI * 54; 
                       
                       return Object.entries(stats).map(([cat, val], idx) => {
                         const pct = val / totalVal;
@@ -385,7 +385,7 @@ export const Dashboard: React.FC = () => {
                   </div>
                 </div>
 
-                {/* Legend list */}
+                
                 <div className="space-y-2 max-h-[140px] overflow-y-auto pr-1">
                   {Object.entries(stats).map(([category, count], idx) => {
                     const hue = (idx * 55 + 20) % 360;
@@ -410,7 +410,7 @@ export const Dashboard: React.FC = () => {
             )}
           </div>
 
-          {/* Audit Logs / Activity Feed */}
+          
           <div className="glass-card rounded-2xl p-6 border border-white/5 flex flex-col">
             <div className="flex justify-between items-center mb-5 shrink-0">
               <div>

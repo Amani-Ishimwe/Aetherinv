@@ -28,7 +28,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(ProductController.class)
-@AutoConfigureMockMvc(addFilters = false) // Disables Spring Security filters to focus on controller mapping
+@AutoConfigureMockMvc(addFilters = false) 
 class ProductControllerTest {
 
     @Autowired

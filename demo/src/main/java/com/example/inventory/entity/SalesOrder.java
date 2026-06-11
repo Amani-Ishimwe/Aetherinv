@@ -32,9 +32,9 @@ public class SalesOrder {
 
     private BigDecimal unitPrice;
 
-    private BigDecimal discount; // percentage
+    private BigDecimal discount; 
 
-    private BigDecimal taxRate; // percentage
+    private BigDecimal taxRate; 
 
     private BigDecimal subtotal;
 

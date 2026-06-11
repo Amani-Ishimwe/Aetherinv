@@ -21,7 +21,7 @@ public class AuditSession {
 
     private String title;
 
-    private String status; // IN_PROGRESS, COMPLETED
+    private String status; 
 
     private String date;
 

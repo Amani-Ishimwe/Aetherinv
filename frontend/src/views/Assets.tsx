@@ -11,7 +11,7 @@ interface CorporateAsset {
   department: string;
   purchasePrice: number;
   purchaseDate: string;
-  depreciationRate: number; // yearly percent e.g. 0.2 (20%)
+  depreciationRate: number; 
   maintenanceStatus: 'GOOD' | 'NEEDS_SERVICE' | 'UNDER_MAINTENANCE';
   maintenanceHistory: { date: string; note: string }[];
 }
@@ -21,10 +21,10 @@ export const Assets: React.FC = () => {
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [successMsg, setSuccessMsg] = useState<string | null>(null);
 
-  // Assets catalog from backend
+  
   const [assets, setAssets] = useState<CorporateAsset[]>([]);
 
-  // Form registration states
+  
   const [tagName, setTagName] = useState('');
   const [assetName, setAssetName] = useState('');
   const [assignedTo, setAssignedTo] = useState('');
@@ -33,7 +33,7 @@ export const Assets: React.FC = () => {
   const [purchaseDate, setPurchaseDate] = useState('');
   const [depreciationRate, setDepreciationRate] = useState<number>(20);
 
-  // Asset Inspection
+  
   const [inspectAsset, setInspectAsset] = useState<CorporateAsset | null>(null);
 
   const fetchAssets = async () => {
@@ -67,7 +67,7 @@ export const Assets: React.FC = () => {
     fetchAssets();
   }, []);
 
-  // Calculate book value dynamically based on elapsed years (Straight line depreciation)
+  
   const calculateBookValue = (asset: CorporateAsset) => {
     const elapsedMs = new Date().getTime() - new Date(asset.purchaseDate).getTime();
     const elapsedYears = elapsedMs / (1000 * 60 * 60 * 24 * 365.25);
@@ -111,7 +111,7 @@ export const Assets: React.FC = () => {
       fetchAssets();
       setSuccessMsg(`Registered hardware asset "${newAsset.name}" successfully!`);
       
-      // Clear forms
+      
       setTagName('');
       setAssetName('');
       setAssignedTo('');
@@ -145,7 +145,7 @@ export const Assets: React.FC = () => {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         
-        {/* Left Column: Asset Registry Table */}
+        
         <div className="lg:col-span-2 glass-card rounded-2xl p-6 border border-white/5 flex flex-col">
           <div className="mb-6 shrink-0">
             <h3 className="text-lg font-bold text-white flex items-center space-x-2">
@@ -208,10 +208,10 @@ export const Assets: React.FC = () => {
           </div>
         </div>
 
-        {/* Right Column: Register Hardware Form */}
+        
         <div className="space-y-8">
           
-          {/* Card: Register Asset */}
+          
           <div className="glass-card rounded-2xl p-6 border border-white/5">
             <div className="flex items-center space-x-3 mb-5">
               <div className="p-2.5 bg-brandorange-50/10 border border-brandorange-500/20 rounded-xl text-brandorange-500">
@@ -320,7 +320,7 @@ export const Assets: React.FC = () => {
             </form>
           </div>
 
-          {/* Card: Asset Inspector Card */}
+          
           {inspectAsset && (
             <div className="glass-card rounded-2xl p-6 border border-brandorange-500/20 flex flex-col relative animate-slideIn">
               <button 

@@ -29,7 +29,7 @@ public class TransferLog {
 
     private Integer quantity;
 
-    private String status; // PENDING, APPROVED, REJECTED
+    private String status; 
 
     private String date;
 }

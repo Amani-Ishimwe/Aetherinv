@@ -155,7 +155,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin, onRegister }) => {
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Navigation */}
+      
       <nav className="fixed top-0 w-full bg-white/95 backdrop-blur-sm z-50 border-b border-gray-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
@@ -166,7 +166,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin, onRegister }) => {
               <span className="font-bold text-xl text-blue-900">Aetherinv</span>
             </div>
 
-            {/* Desktop Menu */}
+            
             <div className="hidden md:flex items-center gap-8">
               <a href="#features" className="text-gray-700 hover:text-blue-900 transition">
                 Features
@@ -179,7 +179,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin, onRegister }) => {
               </a>
             </div>
 
-            {/* CTA Buttons */}
+            
             <div className="hidden md:flex items-center gap-4">
               <button 
                 onClick={onLogin}
@@ -195,7 +195,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin, onRegister }) => {
               </button>
             </div>
 
-            {/* Mobile Menu Button */}
+            
             <button
               className="md:hidden"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -204,7 +204,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin, onRegister }) => {
             </button>
           </div>
 
-          {/* Mobile Menu */}
+          
           {isMenuOpen && (
             <div className="md:hidden pb-4 border-t border-gray-100">
               <a href="#features" className="block py-2 text-gray-700 hover:text-blue-900">
@@ -227,7 +227,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin, onRegister }) => {
         </div>
       </nav>
 
-      {/* Hero Section */}
+      
       <section className="pt-32 pb-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-blue-50 to-white">
         <div className="max-w-7xl mx-auto">
           <div className="grid md:grid-cols-2 gap-12 items-center">
@@ -272,7 +272,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin, onRegister }) => {
         </div>
       </section>
 
-      {/* Features Section */}
+      
       <section id="features" className="py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
@@ -303,7 +303,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin, onRegister }) => {
         </div>
       </section>
 
-      {/* How It Works */}
+      
       <section className="py-20 px-4 sm:px-6 lg:px-8 bg-blue-900 text-white">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
@@ -342,7 +342,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin, onRegister }) => {
         </div>
       </section>
 
-      {/* Benefits Section */}
+      
       <section id="benefits" className="py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
@@ -371,7 +371,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin, onRegister }) => {
         </div>
       </section>
 
-      {/* Testimonials */}
+      
       <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gray-50">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
@@ -404,7 +404,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin, onRegister }) => {
         </div>
       </section>
 
-      {/* Pricing Section */}
+      
       <section id="pricing" className="py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
@@ -472,7 +472,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin, onRegister }) => {
         </div>
       </section>
 
-      {/* CTA Section */}
+      
       <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-r from-blue-900 to-orange-500">
         <div className="max-w-4xl mx-auto text-center text-white">
           <h2 className="text-4xl sm:text-5xl font-bold mb-6">
@@ -492,7 +492,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin, onRegister }) => {
         </div>
       </section>
 
-      {/* Footer */}
+      
       <footer className="bg-blue-900 text-white px-4 sm:px-6 lg:px-8 py-12">
         <div className="max-w-7xl mx-auto grid md:grid-cols-4 gap-8 mb-8">
           <div>

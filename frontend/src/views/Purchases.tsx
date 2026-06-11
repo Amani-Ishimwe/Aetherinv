@@ -37,19 +37,19 @@ interface PurchaseOrder {
 export const Purchases: React.FC = () => {
   const { user } = useAuth();
   
-  // Products from database
+  
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [procureLoading, setProcureLoading] = useState(false);
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
 
-  // Form states
+  
   const [supplierName, setSupplierName] = useState('TechLogix Distribution');
   const [selectedProductId, setSelectedProductId] = useState<number | ''>('');
   const [purchaseQty, setPurchaseQty] = useState<number>(0);
   const [unitCost, setUnitCost] = useState<number>(0);
 
-  // Purchase orders catalog
+  
   const [orders, setOrders] = useState<PurchaseOrder[]>([]);
 
   const loadData = async () => {
@@ -153,11 +153,11 @@ export const Purchases: React.FC = () => {
 
     setProcureLoading(true);
     try {
-      // Find central product
+      
       const prod = products.find(p => p.id === order.productId);
       if (!prod) throw new Error('Product not found in current inventory catalog.');
 
-      // Update database product stock (PUT)
+      
       const updatedProduct = {
         ...prod,
         quantity: prod.quantity + order.quantity
@@ -165,15 +165,15 @@ export const Purchases: React.FC = () => {
 
       await api.put(`/products/${prod.id}`, updatedProduct);
 
-      // Update PO status
+      
       const updatedPO = { ...order, status: 'DELIVERED' };
       await api.put(`/purchase-orders/${order.id}`, updatedPO);
 
-      // Audit Log
+      
       addAuditLog('UPDATE', prod.sku, `Received Goods for PO ${order.id}: Restocked +${order.quantity} units to database`, user?.email || 'System');
 
       setMessage({ type: 'success', text: `Received stock for PO ${order.id}. Central database updated successfully!` });
-      loadData(); // reload
+      loadData(); 
     } catch (err: any) {
       setMessage({ type: 'error', text: err.message || 'Failed to update database stock during receipt.' });
     } finally {
@@ -217,7 +217,7 @@ export const Purchases: React.FC = () => {
         </div>
       )}
 
-      {/* PO Workflow Visual Indicator */}
+      
       <div className="glass-card rounded-2xl p-5 border border-white/5">
         <h3 className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-4">Procurement Pipeline Workflow</h3>
         <div className="grid grid-cols-4 gap-4 text-center text-xs relative">
@@ -246,7 +246,7 @@ export const Purchases: React.FC = () => {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         
-        {/* Left Column: PO Drafter */}
+        
         <div className="lg:col-span-1 glass-card rounded-2xl p-6 border border-white/5 h-fit">
           <div className="flex items-center space-x-3 mb-6">
             <div className="p-2.5 bg-brandorange-50/10 border border-brandorange-500/20 rounded-xl text-brandorange-500">
@@ -332,7 +332,7 @@ export const Purchases: React.FC = () => {
           )}
         </div>
 
-        {/* Right Column: PO List & Receipt Actions */}
+        
         <div className="lg:col-span-2 glass-card rounded-2xl p-6 border border-white/5 flex flex-col">
           <div className="mb-6 shrink-0">
             <h3 className="text-lg font-bold text-white flex items-center space-x-2">
@@ -376,7 +376,7 @@ export const Purchases: React.FC = () => {
                     </p>
                   </div>
 
-                  {/* Actions column */}
+                  
                   <div className="flex flex-wrap items-center gap-2 shrink-0 self-end sm:self-center">
                     {order.status === 'DRAFT' && (
                       <button

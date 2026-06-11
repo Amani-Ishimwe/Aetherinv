@@ -88,7 +88,7 @@ class AuthenticationServiceTest {
         UsernamePasswordAuthenticationToken expectedAuthToken = 
                 new UsernamePasswordAuthenticationToken("john.doe@example.com", "raw_password");
 
-        when(authenticationManager.authenticate(expectedAuthToken)).thenReturn(null); // Return value not used
+        when(authenticationManager.authenticate(expectedAuthToken)).thenReturn(null); 
         when(userRepository.findByEmail("john.doe@example.com")).thenReturn(Optional.of(user));
         when(jwtService.generateToken(user)).thenReturn("jwt_token_abc");
 

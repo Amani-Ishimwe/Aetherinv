@@ -32,7 +32,7 @@ interface DiscrepancyItem {
   sku: string;
   systemQty: number;
   physicalQty: number;
-  discrepancy: number; // physicalQty - systemQty
+  discrepancy: number; 
   notes: string;
   resolved: boolean;
 }
@@ -40,19 +40,19 @@ interface DiscrepancyItem {
 export const Auditing: React.FC = () => {
   const { user } = useAuth();
   
-  // Real products
+  
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [auditLoading, setAuditLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
-  // Sessions state from backend
+  
   const [sessions, setSessions] = useState<AuditSession[]>([]);
 
-  // Discrepancy reports worksheet from backend
+  
   const [worksheet, setWorksheet] = useState<DiscrepancyItem[]>([]);
 
-  // Form states
+  
   const [selectedProductId, setSelectedProductId] = useState<number | ''>('');
   const [physicalCount, setPhysicalCount] = useState<number | ''>('');
   const [auditNotes, setAuditNotes] = useState('');
@@ -169,7 +169,7 @@ export const Auditing: React.FC = () => {
       const prod = products.find(p => p.id === item.productId);
       if (!prod) throw new Error('Product SKU no longer exists in current catalog.');
 
-      // Update database product stock (PUT) to match counted physical stock
+      
       const updatedProduct = {
         ...prod,
         quantity: item.physicalQty
@@ -177,17 +177,17 @@ export const Auditing: React.FC = () => {
 
       await api.put(`/products/${prod.id}`, updatedProduct);
 
-      // Update discrepancy resolved flag (PUT)
+      
       const updatedItem = {
         ...item,
         resolved: true
       };
       await api.put(`/discrepancies/${item.id}`, updatedItem);
 
-      // Audit Log
+      
       addAuditLog('UPDATE', prod.sku, `Resolved Audit Discrepancy ${item.id}: Adjusted system stock from ${item.systemQty} to ${item.physicalQty}`, user?.email || 'System');
 
-      loadData(); // reload
+      loadData(); 
     } catch (err: any) {
       setErrorMsg(err.message || 'Failed to adjust system stock.');
     } finally {
@@ -210,7 +210,7 @@ export const Auditing: React.FC = () => {
         </div>
       )}
 
-      {/* Audit Sessions Cards Grid */}
+      
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div className="glass-card rounded-2xl p-6 border border-white/5 flex flex-col justify-between">
           <div className="flex items-center space-x-3 mb-4">
@@ -253,7 +253,7 @@ export const Auditing: React.FC = () => {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         
-        {/* Left Column: Discrepancy Drafter */}
+        
         <div className="lg:col-span-1 glass-card rounded-2xl p-6 border border-white/5 h-fit">
           <div className="flex items-center space-x-3 mb-6">
             <div className="p-2.5 bg-brandorange-50/10 border border-brandorange-500/20 rounded-xl text-brandorange-500">
@@ -321,7 +321,7 @@ export const Auditing: React.FC = () => {
           )}
         </div>
 
-        {/* Right Column: Count Discrepancy Worksheet */}
+        
         <div className="lg:col-span-2 glass-card rounded-2xl p-6 border border-white/5 flex flex-col">
           <div className="mb-6 shrink-0">
             <h3 className="text-lg font-bold text-white flex items-center space-x-2">

@@ -39,7 +39,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    // Check if token and user info exist in storage
+    
     const storedToken = localStorage.getItem('token');
     const storedUser = localStorage.getItem('user');
 
@@ -47,7 +47,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       try {
         setToken(storedToken);
         const parsedUser = JSON.parse(storedUser);
-        // Default role to Super Admin if not present
+        
         if (!parsedUser.role) {
           parsedUser.role = 'Super Admin';
         }
@@ -59,7 +59,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
     setLoading(false);
 
-    // Setup unauthorized listener
+    
     const handleUnauthorized = () => {
       setUser(null);
       setToken(null);
@@ -80,7 +80,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       
       const userData: User = { 
         email, 
-        role: 'Super Admin' // Defaults to Super Admin on login
+        role: 'Super Admin' 
       };
       
       localStorage.setItem('token', jwtToken);

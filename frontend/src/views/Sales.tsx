@@ -27,8 +27,8 @@ interface SalesOrder {
   sku: string;
   quantity: number;
   unitPrice: number;
-  discount: number; // percent e.g. 10 for 10%
-  taxRate: number; // e.g. 18 for 18% VAT
+  discount: number; 
+  taxRate: number; 
   subtotal: number;
   tax: number;
   total: number;
@@ -38,23 +38,23 @@ interface SalesOrder {
 export const Sales: React.FC = () => {
   const { user } = useAuth();
   
-  // Real products
+  
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [salesLoading, setSalesLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
-  // Form states
+  
   const [customerName, setCustomerName] = useState('Alice Uwase');
   const [selectedProductId, setSelectedProductId] = useState<number | ''>('');
   const [salesQty, setSalesQty] = useState<number>(0);
   const [discountPercent, setDiscountPercent] = useState<number>(0);
-  const [taxRate] = useState<number>(18); // 18% VAT standard
+  const [taxRate] = useState<number>(18); 
 
-  // Sales Orders List from backend
+  
   const [salesList, setSalesList] = useState<SalesOrder[]>([]);
 
-  // Invoice modal
+  
   const [inspectInvoice, setInspectInvoice] = useState<SalesOrder | null>(null);
 
   const loadData = async () => {
@@ -101,14 +101,14 @@ export const Sales: React.FC = () => {
 
     setSalesLoading(true);
     try {
-      // Calculate subtotals
+      
       const rawSubtotal = salesQty * prod.price;
       const discountVal = rawSubtotal * (discountPercent / 100);
       const subtotal = rawSubtotal - discountVal;
       const tax = subtotal * (taxRate / 100);
       const total = subtotal + tax;
 
-      // Update backend database (PUT) to deduct stock
+      
       const updatedProduct = {
         ...prod,
         quantity: prod.quantity - salesQty
@@ -136,13 +136,13 @@ export const Sales: React.FC = () => {
 
       await api.post('/sales-orders', newOrder);
 
-      // Audit Log
+      
       addAuditLog('UPDATE', prod.sku, `Created Invoice ${invoiceId}: Sold ${salesQty} pcs to ${customerName}`, user?.email || 'System');
 
       setSalesQty(0);
       setDiscountPercent(0);
       setSelectedProductId('');
-      loadData(); // reload
+      loadData(); 
     } catch (err: any) {
       setErrorMsg(err.message || 'Error occurred while saving sales order.');
     } finally {
@@ -167,7 +167,7 @@ export const Sales: React.FC = () => {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         
-        {/* Left Column: Create Sales Order */}
+        
         <div className="lg:col-span-1 glass-card rounded-2xl p-6 border border-white/5 h-fit">
           <div className="flex items-center space-x-3 mb-6">
             <div className="p-2.5 bg-brandorange-55/10 border border-brandorange-500/20 rounded-xl text-brandorange-500">
@@ -241,7 +241,7 @@ export const Sales: React.FC = () => {
                 </div>
               </div>
 
-              {/* Displaying tax rate info */}
+              
               <div className="flex items-center justify-between text-[10px] text-slate-500 bg-darkblue-950/40 p-2 rounded-lg border border-darkblue-850">
                 <span>Standard VAT applied:</span>
                 <span className="font-bold text-brandorange-400">18% VAT</span>
@@ -258,7 +258,7 @@ export const Sales: React.FC = () => {
           )}
         </div>
 
-        {/* Right Column: Sales Orders list */}
+        
         <div className="lg:col-span-2 glass-card rounded-2xl p-6 border border-white/5 flex flex-col">
           <div className="mb-6 shrink-0">
             <h3 className="text-lg font-bold text-white flex items-center space-x-2">
@@ -319,13 +319,13 @@ export const Sales: React.FC = () => {
 
       </div>
 
-      {/* Invoice Inspector Drawer modal */}
+      
       {inspectInvoice && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
           <div className="fixed inset-0 bg-darkblue-950/80 backdrop-blur-sm" onClick={() => setInspectInvoice(null)} />
           
           <div className="bg-white text-slate-900 rounded-2xl w-full max-w-lg shadow-2xl relative z-10 p-8 flex flex-col font-sans max-h-[90vh] overflow-y-auto">
-            {/* Logo and company info */}
+            
             <div className="flex justify-between items-start border-b pb-6 mb-6">
               <div>
                 <h3 className="text-xl font-black tracking-wider text-slate-900">AETHER<span className="text-brandorange-600">INV</span></h3>
@@ -339,14 +339,14 @@ export const Sales: React.FC = () => {
               </div>
             </div>
 
-            {/* Customer info */}
+            
             <div className="mb-6 text-xs bg-slate-50 p-4 rounded-xl">
               <p className="text-slate-500 font-bold uppercase tracking-wider text-[9px] mb-1">Invoiced To:</p>
               <p className="font-extrabold text-slate-950 text-sm">{inspectInvoice.customerName}</p>
               <p className="text-slate-500 mt-1">Status: Paid in Full</p>
             </div>
 
-            {/* Items Table */}
+            
             <div className="flex-1 min-h-[100px] mb-6">
               <table className="w-full text-left text-xs border-collapse">
                 <thead>
@@ -373,7 +373,7 @@ export const Sales: React.FC = () => {
               </table>
             </div>
 
-            {/* Calculations breakdown */}
+            
             <div className="border-t pt-4 text-xs space-y-2 max-w-xs ml-auto w-full font-mono">
               <div className="flex justify-between">
                 <span className="text-slate-500">Subtotal:</span>
@@ -399,7 +399,7 @@ export const Sales: React.FC = () => {
               </div>
             </div>
 
-            {/* Printer Button */}
+            
             <div className="border-t pt-6 mt-6 flex justify-between items-center shrink-0">
               <button
                 onClick={() => setInspectInvoice(null)}

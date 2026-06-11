@@ -31,11 +31,11 @@ export const Login: React.FC<LoginProps> = ({ onToggleView, onBackToLanding }) =
 
   return (
     <div className="min-h-screen bg-darkblue-950 flex flex-col items-center justify-center p-4 relative overflow-hidden" style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }}>
-      {/* Background glows */}
+      
       <div className="absolute top-1/4 left-1/4 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-brandorange-500/10 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute bottom-1/4 right-1/4 translate-x-1/2 translate-y-1/2 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl pointer-events-none" />
 
-      {/* Back to landing */}
+      
       <button
         onClick={onBackToLanding}
         className="absolute top-6 left-6 flex items-center gap-2 text-slate-400 hover:text-brandorange-400 transition-colors text-sm font-semibold"
@@ -45,7 +45,7 @@ export const Login: React.FC<LoginProps> = ({ onToggleView, onBackToLanding }) =
       </button>
 
       <div className="w-full max-w-md z-10">
-        {/* Logo */}
+        
         <div className="flex flex-col items-center justify-center mb-8">
           <div className="w-16 h-16 bg-gradient-to-br from-brandorange-600 to-brandorange-400 rounded-2xl flex items-center justify-center shadow-2xl shadow-brandorange-500/30 mb-4">
             <i className="fa-solid fa-boxes-stacked text-white text-2xl"></i>
@@ -56,7 +56,7 @@ export const Login: React.FC<LoginProps> = ({ onToggleView, onBackToLanding }) =
           <p className="text-slate-400 text-sm mt-1">Welcome back — sign in to continue</p>
         </div>
 
-        {/* Form Card */}
+        
         <div className="bg-darkblue-900/70 backdrop-blur-md rounded-3xl shadow-2xl p-8 border border-darkblue-800/80">
           <h3 className="text-2xl font-bold text-white mb-6">Sign In</h3>
 
@@ -68,7 +68,7 @@ export const Login: React.FC<LoginProps> = ({ onToggleView, onBackToLanding }) =
           )}
 
           <form onSubmit={handleSubmit} className="space-y-5">
-            {/* Email */}
+            
             <div>
               <label className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">
                 Email Address
@@ -88,7 +88,7 @@ export const Login: React.FC<LoginProps> = ({ onToggleView, onBackToLanding }) =
               </div>
             </div>
 
-            {/* Password */}
+            
             <div>
               <label className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">
                 Password

@@ -186,7 +186,7 @@ class ProductServiceTest {
 
     @Test
     void testGetLowStockProducts() {
-        List<Product> lowStockList = Collections.singletonList(product2); // quantity 3
+        List<Product> lowStockList = Collections.singletonList(product2); 
 
         when(repository.findLowStockProducts(5)).thenReturn(lowStockList);
 

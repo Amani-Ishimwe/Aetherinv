@@ -38,7 +38,7 @@ export const Products: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  // Pagination & Sorting State
+  
   const [page, setPage] = useState(0);
   const [size] = useState(10);
   const [totalPages, setTotalPages] = useState(1);
@@ -50,7 +50,7 @@ export const Products: React.FC = () => {
   const [sortField, setSortField] = useState('name');
   const [sortDir, setSortDir] = useState<'asc' | 'desc'>('asc');
 
-  // Modals state
+  
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
   const [isDetailsOpen, setIsDetailsOpen] = useState(false);
@@ -58,7 +58,7 @@ export const Products: React.FC = () => {
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [exporting, setExporting] = useState(false);
 
-  // Fetch unique categories for filtering
+  
   const fetchCategories = async () => {
     try {
       const statsRes = await api.get('/products/stats');
@@ -77,7 +77,7 @@ export const Products: React.FC = () => {
       let response;
       const sortParam = `${sortField},${sortDir}`;
       
-      // Determine if we should hit search endpoint or paginated fetch endpoint
+      
       const activeKeyword = searchQuery.trim() || categoryFilter;
       
       if (activeKeyword) {
@@ -116,12 +116,12 @@ export const Products: React.FC = () => {
     fetchProducts();
   }, [page, sortField, sortDir, categoryFilter]);
 
-  // Debounced/Triggered Search
+  
   useEffect(() => {
     const handler = setTimeout(() => {
       setPage(0);
       fetchProducts();
-    }, 450); // Debounce search calls
+    }, 450); 
 
     return () => clearTimeout(handler);
   }, [searchQuery]);
@@ -140,17 +140,17 @@ export const Products: React.FC = () => {
     setPage(0);
   };
 
-  // Create or Update submit handler
+  
   const handleProductSubmit = async (productData: Product) => {
     try {
       if (productData.id) {
-        // Edit product
+        
         const response = await api.put(`/products/${productData.id}`, productData);
         if (response.status === 200) {
           addAuditLog('UPDATE', productData.sku, productData.name, user?.email || 'System');
         }
       } else {
-        // Add new product
+        
         const response = await api.post('/products', productData);
         if (response.data) {
           addAuditLog('CREATE', productData.sku, productData.name, user?.email || 'System');
@@ -160,11 +160,11 @@ export const Products: React.FC = () => {
       fetchCategories();
     } catch (err: any) {
       console.error('Error saving product:', err);
-      throw err; // Propagate to modal to show error
+      throw err; 
     }
   };
 
-  // Delete product confirmation handler
+  
   const handleDeleteProduct = async () => {
     if (!selectedProduct?.id) return;
     setConfirmLoading(true);
@@ -183,7 +183,7 @@ export const Products: React.FC = () => {
     }
   };
 
-  // CSV Exporter using current filters & search (max 1000 items)
+  
   const handleExportCSV = async () => {
     setExporting(true);
     try {
@@ -258,10 +258,10 @@ export const Products: React.FC = () => {
 
   return (
     <div className="space-y-6 animate-fadeIn">
-      {/* Search and Action Bar */}
+      
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         
-        {/* Search and Filters */}
+        
         <div className="flex flex-col sm:flex-row gap-3 flex-1 max-w-2xl">
           <div className="relative flex-1">
             <span className="absolute inset-y-0 left-0 pl-3.5 flex items-center text-slate-500">
@@ -272,7 +272,7 @@ export const Products: React.FC = () => {
               placeholder="Search products by Name, SKU, Category..."
               value={searchQuery}
               onChange={(e) => {
-                setCategoryFilter(''); // clear category filter when typing search
+                setCategoryFilter(''); 
                 setSearchQuery(e.target.value);
               }}
               className="w-full bg-darkblue-900 border border-darkblue-800/80 focus:border-brandorange-500 focus:ring-1 focus:ring-brandorange-500 rounded-xl py-2.5 pl-10 pr-4 text-slate-200 placeholder-slate-500 transition-all outline-none text-sm"
@@ -286,7 +286,7 @@ export const Products: React.FC = () => {
             <select
               value={categoryFilter}
               onChange={(e) => {
-                setSearchQuery(''); // clear query when selecting category
+                setSearchQuery(''); 
                 setCategoryFilter(e.target.value);
                 setPage(0);
               }}
@@ -302,9 +302,9 @@ export const Products: React.FC = () => {
           </div>
         </div>
 
-        {/* Buttons Panel */}
+        
         <div className="flex items-center space-x-3 shrink-0">
-          {/* CSV Exporter */}
+          
           <button
             onClick={handleExportCSV}
             disabled={products.length === 0 || exporting}
@@ -315,7 +315,7 @@ export const Products: React.FC = () => {
             <span>Export CSV</span>
           </button>
 
-          {/* Add Product Button */}
+          
           <button
             onClick={openAddModal}
             className="bg-gradient-to-r from-brandorange-600 to-brandorange-500 hover:from-brandorange-500 hover:to-brandorange-400 text-white font-bold px-5 py-2.5 rounded-xl shadow-lg shadow-brandorange-500/20 transition-all duration-200 flex items-center justify-center space-x-2 active:scale-95"
@@ -333,7 +333,7 @@ export const Products: React.FC = () => {
         </div>
       )}
 
-      {/* Products Table Wrapper */}
+      
       <div className="glass-card rounded-2xl border border-white/5 overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse">
@@ -448,7 +448,7 @@ export const Products: React.FC = () => {
                       </td>
                       <td className="px-6 py-4 text-right">
                         <div className="flex items-center justify-end space-x-2.5">
-                          {/* Details Eye Button */}
+                          
                           <button
                             onClick={() => openDetailsModal(prod)}
                             className="p-1.5 text-slate-400 hover:text-white hover:bg-darkblue-850 rounded-lg transition-colors border border-transparent hover:border-darkblue-800"
@@ -457,7 +457,7 @@ export const Products: React.FC = () => {
                             <Eye className="h-4 w-4" />
                           </button>
                           
-                          {/* Edit Button */}
+                          
                           <button
                             onClick={() => openEditModal(prod)}
                             className="p-1.5 text-slate-400 hover:text-white hover:bg-darkblue-850 rounded-lg transition-colors border border-transparent hover:border-darkblue-800"
@@ -466,7 +466,7 @@ export const Products: React.FC = () => {
                             <Edit2 className="h-4 w-4" />
                           </button>
 
-                          {/* Delete Button */}
+                          
                           <button
                             onClick={() => openDeleteConfirm(prod)}
                             className="p-1.5 text-slate-400 hover:text-red-400 hover:bg-red-500/10 rounded-lg transition-colors border border-transparent hover:border-red-500/20"
@@ -484,7 +484,7 @@ export const Products: React.FC = () => {
           </table>
         </div>
 
-        {/* Pagination Controls Footer */}
+        
         {totalPages > 1 && (
           <div className="bg-darkblue-900/30 px-6 py-4 border-t border-darkblue-800 flex items-center justify-between text-sm shrink-0">
             <span className="text-slate-400 text-xs">
@@ -510,7 +510,7 @@ export const Products: React.FC = () => {
         )}
       </div>
 
-      {/* Add / Edit Modal */}
+      
       <ProductModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
@@ -518,7 +518,7 @@ export const Products: React.FC = () => {
         product={selectedProduct}
       />
 
-      {/* Delete Confirmation Modal */}
+      
       <ConfirmModal
         isOpen={isConfirmOpen}
         onClose={() => setIsConfirmOpen(false)}
@@ -528,7 +528,7 @@ export const Products: React.FC = () => {
         loading={confirmLoading}
       />
 
-      {/* Details Specification Modal */}
+      
       <ProductDetailsModal
         isOpen={isDetailsOpen}
         onClose={() => setIsDetailsOpen(false)}

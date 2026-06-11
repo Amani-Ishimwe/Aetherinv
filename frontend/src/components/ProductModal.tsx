@@ -15,7 +15,7 @@ interface ProductModalProps {
   isOpen: boolean;
   onClose: () => void;
   onSubmit: (productData: Product) => Promise<void>;
-  product?: Product | null; // If passed, we are in edit mode
+  product?: Product | null; 
 }
 
 export const ProductModal: React.FC<ProductModalProps> = ({ isOpen, onClose, onSubmit, product }) => {
@@ -37,7 +37,7 @@ export const ProductModal: React.FC<ProductModalProps> = ({ isOpen, onClose, onS
       setCategory(product.category || '');
       setDescription(product.description || '');
     } else {
-      // Reset form for creating
+      
       setName('');
       setSku('');
       setQuantity(0);
@@ -54,7 +54,7 @@ export const ProductModal: React.FC<ProductModalProps> = ({ isOpen, onClose, onS
     e.preventDefault();
     setError(null);
 
-    // Frontend Validations
+    
     if (!name.trim()) return setError('Product name is required.');
     if (!sku.trim()) return setError('Product SKU is required.');
     if (quantity < 0) return setError('Quantity cannot be negative.');
@@ -86,15 +86,15 @@ export const ProductModal: React.FC<ProductModalProps> = ({ isOpen, onClose, onS
 
   return (
     <div className="fixed inset-0 z-50 overflow-y-auto flex items-center justify-center p-4">
-      {/* Backdrop */}
+      
       <div 
         className="fixed inset-0 bg-darkblue-950/80 backdrop-blur-sm transition-opacity" 
         onClick={onClose}
       />
 
-      {/* Modal Card */}
+      
       <div className="bg-darkblue-900 border border-darkblue-800 rounded-2xl w-full max-w-lg shadow-2xl relative z-10 overflow-hidden transform transition-all duration-300 scale-100 max-h-[90vh] flex flex-col">
-        {/* Header */}
+        
         <div className="flex items-center justify-between px-6 py-4 border-b border-darkblue-800/80 shrink-0">
           <h3 className="text-xl font-bold text-white">
             {product ? 'Edit Product Details' : 'Register New Product'}
@@ -107,7 +107,7 @@ export const ProductModal: React.FC<ProductModalProps> = ({ isOpen, onClose, onS
           </button>
         </div>
 
-        {/* Scrollable Content */}
+        
         <form onSubmit={handleSubmit} className="flex flex-col min-h-0 flex-1">
           <div className="p-6 overflow-y-auto space-y-4 flex-1">
             {error && (
@@ -193,7 +193,7 @@ export const ProductModal: React.FC<ProductModalProps> = ({ isOpen, onClose, onS
             </div>
           </div>
 
-          {/* Footer Actions */}
+          
           <div className="bg-darkblue-950 px-6 py-4 border-t border-darkblue-800/80 flex items-center justify-end space-x-3 shrink-0">
             <button
               type="button"

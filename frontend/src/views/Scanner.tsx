@@ -12,16 +12,16 @@ interface Product {
 }
 
 export const Scanner: React.FC = () => {
-  // Real products from backend
+  
   const [products, setProducts] = useState<Product[]>([]);
 
-  // Camera states
+  
   const [cameraActive, setCameraActive] = useState(false);
   const [cameraError, setCameraError] = useState<string | null>(null);
   const [detectedProduct, setDetectedProduct] = useState<Product | null>(null);
   const [scanning, setScanning] = useState(false);
 
-  // QR / Barcode generator state
+  
   const [selectedProductId, setSelectedProductId] = useState<number | ''>('');
   const [labelType, setLabelType] = useState<'BARCODE' | 'QR'>('QR');
 
@@ -72,13 +72,13 @@ export const Scanner: React.FC = () => {
     setScanning(false);
   };
 
-  // Simulate scanning code detection
+  
   const handleScanAction = () => {
     if (products.length === 0) return;
     setScanning(true);
     setDetectedProduct(null);
 
-    // Simulate 1.5 seconds of searching, then detect a random product from backend
+    
     setTimeout(() => {
       const randIdx = Math.floor(Math.random() * products.length);
       setDetectedProduct(products[randIdx]);
@@ -98,7 +98,7 @@ export const Scanner: React.FC = () => {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         
-        {/* Left Column: Live Webcam Scanner */}
+        
         <div className="glass-card rounded-2xl p-6 border border-white/5 flex flex-col justify-between">
           <div>
             <div className="flex items-center justify-between mb-6">
@@ -131,7 +131,7 @@ export const Scanner: React.FC = () => {
               )}
             </div>
 
-            {/* Video Viewfinder screen */}
+            
             <div className="relative aspect-video bg-darkblue-950/80 rounded-2xl border border-darkblue-850 overflow-hidden flex items-center justify-center">
               {cameraActive ? (
                 <>
@@ -141,9 +141,9 @@ export const Scanner: React.FC = () => {
                     playsInline 
                     className="w-full h-full object-cover scale-x-[-1]"
                   />
-                  {/* Scanner overlay line */}
+                  
                   <div className="absolute inset-x-8 top-1/2 h-0.5 bg-red-500 shadow-md shadow-red-500/50 animate-pulse pointer-events-none" />
-                  {/* Corner Targets */}
+                  
                   <div className="absolute top-4 left-4 w-6 h-6 border-t-2 border-l-2 border-brandorange-500" />
                   <div className="absolute top-4 right-4 w-6 h-6 border-t-2 border-r-2 border-brandorange-500" />
                   <div className="absolute bottom-4 left-4 w-6 h-6 border-b-2 border-l-2 border-brandorange-500" />
@@ -182,7 +182,7 @@ export const Scanner: React.FC = () => {
               </button>
             </div>
 
-            {/* Detected Product detail card */}
+            
             {detectedProduct && (
               <div className="bg-darkblue-950/40 border border-green-500/15 rounded-xl p-4 flex items-center justify-between animate-slideIn">
                 <div>
@@ -203,7 +203,7 @@ export const Scanner: React.FC = () => {
           </div>
         </div>
 
-        {/* Right Column: QR / Barcode Generator */}
+        
         <div className="glass-card rounded-2xl p-6 border border-white/5 flex flex-col justify-between">
           <div className="space-y-6">
             <div className="flex items-center space-x-3">
@@ -262,7 +262,7 @@ export const Scanner: React.FC = () => {
             </div>
           </div>
 
-          {/* Generated Label Preview Card */}
+          
           <div className="border-t border-darkblue-800/80 pt-5 mt-6">
             {currentGenProduct ? (
               <div className="bg-white text-slate-900 rounded-xl p-5 flex flex-col items-center justify-center max-w-xs mx-auto border shadow-md font-sans">
@@ -272,7 +272,7 @@ export const Scanner: React.FC = () => {
 
                 {labelType === 'QR' ? (
                   <div className="p-2 border-2 border-slate-900 rounded-lg">
-                    {/* Simulated High-Fidelity QR Code layout */}
+                    
                     <div className="w-20 h-20 bg-slate-950 grid grid-cols-5 gap-0.5 p-0.5">
                       {[...Array(25)].map((_, i) => (
                         <span key={i} className={`h-full w-full rounded-[1px] ${
@@ -283,7 +283,7 @@ export const Scanner: React.FC = () => {
                   </div>
                 ) : (
                   <div className="flex items-center justify-center space-x-0.5 h-10 w-44 bg-slate-950 p-1 mb-1 rounded-sm">
-                    {/* Custom HTML/CSS Barcode lines */}
+                    
                     {[...Array(24)].map((_, i) => (
                       <span 
                         key={i} 

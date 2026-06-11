@@ -51,7 +51,7 @@ export const NotificationPanel: React.FC<NotificationPanelProps> = ({ isOpen, on
 
   return (
     <div className="fixed inset-0 z-50 overflow-hidden text-slate-200">
-      {/* Backdrop */}
+      
       <div 
         className="absolute inset-0 bg-darkblue-950/80 backdrop-blur-sm transition-opacity" 
         onClick={onClose}
@@ -60,7 +60,7 @@ export const NotificationPanel: React.FC<NotificationPanelProps> = ({ isOpen, on
       <div className="absolute inset-y-0 right-0 pl-10 max-w-full flex">
         <div className="w-screen max-w-md bg-darkblue-900 border-l border-darkblue-800 shadow-2xl flex flex-col h-full transform transition-all duration-300">
           
-          {/* Header */}
+          
           <div className="px-6 py-5 border-b border-darkblue-800 flex items-center justify-between shrink-0 bg-darkblue-950/30">
             <div className="flex items-center space-x-2">
               <Bell className="h-5 w-5 text-brandorange-500" />
@@ -74,15 +74,15 @@ export const NotificationPanel: React.FC<NotificationPanelProps> = ({ isOpen, on
             </button>
           </div>
 
-          {/* Body content */}
+          
           <div className="flex-1 overflow-y-auto p-6 space-y-6">
             
-            {/* Delivery Channels Toggle */}
+            
             <div className="bg-darkblue-950/50 border border-darkblue-800/80 rounded-2xl p-4 space-y-4">
               <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400">Alert Delivery Channels</h3>
               
               <div className="space-y-3 text-sm">
-                {/* Email Channel */}
+                
                 <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-2">
                     <Mail className="h-4 w-4 text-brandorange-500" />
@@ -99,7 +99,7 @@ export const NotificationPanel: React.FC<NotificationPanelProps> = ({ isOpen, on
                   </label>
                 </div>
 
-                {/* SMS Channel */}
+                
                 <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-2">
                     <MessageSquare className="h-4 w-4 text-blue-400" />
@@ -116,7 +116,7 @@ export const NotificationPanel: React.FC<NotificationPanelProps> = ({ isOpen, on
                   </label>
                 </div>
 
-                {/* In-app Channel */}
+                
                 <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-2">
                     <Bell className="h-4 w-4 text-purple-400" />
@@ -135,7 +135,7 @@ export const NotificationPanel: React.FC<NotificationPanelProps> = ({ isOpen, on
               </div>
             </div>
 
-            {/* Notification Feeds */}
+            
             <div className="space-y-4">
               <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400">Activity & Warning Feeds</h3>
               
@@ -182,7 +182,7 @@ export const NotificationPanel: React.FC<NotificationPanelProps> = ({ isOpen, on
 
           </div>
 
-          {/* Footer */}
+          
           <div className="bg-darkblue-950 px-6 py-4 border-t border-darkblue-800 flex items-center justify-end shrink-0">
             <button
               onClick={onClose}

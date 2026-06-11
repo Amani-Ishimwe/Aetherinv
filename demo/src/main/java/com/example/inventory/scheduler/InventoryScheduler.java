@@ -21,10 +21,7 @@ public class InventoryScheduler {
     @Value("${inventory.scheduling.low-stock-threshold:5}")
     private int lowStockThreshold;
 
-    /**
-     * Periodic inventory status report scheduled using a Cron Expression.
-     * Scheduled using standard Spring expressions from application.properties.
-     */
+
     @Scheduled(cron = "${inventory.scheduling.cron}")
     public void reportInventoryStatus() {
         log.info("[CRON JOB] Starting periodic inventory statistics report...");
@@ -34,8 +31,8 @@ public class InventoryScheduler {
             if (countByCategory.isEmpty()) {
                 log.info(" - No categories found in inventory.");
             } else {
-                countByCategory.forEach((category, count) -> 
-                    log.info(" - Category: '{}', Count: {}", category != null ? category : "Uncategorized", count)
+                countByCategory.forEach((category, count) ->
+                        log.info(" - Category: '{}', Count: {}", category != null ? category : "Uncategorized", count)
                 );
             }
         } catch (Exception e) {
@@ -44,12 +41,9 @@ public class InventoryScheduler {
         log.info("[CRON JOB] Inventory statistics report finished.");
     }
 
-    /**
-     * Low stock checker scheduled using a fixed rate with an initial delay.
-     * Runs at a configured fixed rate after a configured initial startup delay.
-     */
-    @Scheduled(fixedRateString = "${inventory.scheduling.low-stock-check-rate}", 
-               initialDelayString = "${inventory.scheduling.initial-delay}")
+
+    @Scheduled(fixedRateString = "${inventory.scheduling.low-stock-check-rate}",
+            initialDelayString = "${inventory.scheduling.initial-delay}")
     public void checkLowStock() {
         log.info("[SCHEDULED TASK] Checking for products below low-stock threshold (Threshold: {})...", lowStockThreshold);
         try {
